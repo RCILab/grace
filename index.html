@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- =============================================================
+       GRACE anonymous project page
+       Replace the anonymous.4open.science ID after you regenerate it.
+       Keep author/institution information removed for double-anonymous review.
+       Required assets for this version:
+       - static/images/fig2.png
+       - static/images/fig4.png
+       - static/images/fig5.png
+       - static/images/social_preview.png
+       - static/images/favicon.ico
+       - static/pdfs/grace_paper.pdf
+       - static/models/trained_model.zip
+       - static/data/training_data.zip
+       - static/videos/banner_video.mp4
+       - static/videos/2d_point_mass.mp4
+       - static/videos/fr3_simulation.mp4
+       - static/videos/fr3_real_world.mp4
+       ============================================================= -->
+
+  <meta name="title" content="GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Estimation">
+  <meta name="description" content="GRACE guides diffusion policies with MPPI using only forward cost evaluations, enabling constraint-aware robot action generation without gradients, retraining, or differentiable costs.">
+  <meta name="keywords" content="diffusion models, model predictive path integral control, motion planning, posterior sampling, gradient-free optimization, robot action generation, constraint-aware planning">
+  <meta name="author" content="Anonymous Authors">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Anonymous Submission">
+  <meta property="og:title" content="GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Estimation">
+  <meta property="og:description" content="GRACE combines a multimodal diffusion prior with MPPI-based gradient-free guidance for constraint-aware robot action generation.">
+  <meta property="og:url" content="https://anonymous.4open.science/w/grace-70BB/">
+  <meta property="og:image" content="https://anonymous.4open.science/w/grace-70BB/static/images/social_preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="GRACE project page preview">
+  <meta property="article:published_time" content="2026-01-01T00:00:00.000Z">
+  <meta property="article:author" content="Anonymous Authors">
+  <meta property="article:section" content="Research">
+  <meta property="article:tag" content="Diffusion Models">
+  <meta property="article:tag" content="Motion Planning">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@anonymous">
+  <meta name="twitter:creator" content="@anonymous">
+  <meta name="twitter:title" content="GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Estimation">
+  <meta name="twitter:description" content="Constraint-aware diffusion planning with gradient-free MPPI guidance.">
+  <meta name="twitter:image" content="https://anonymous.4open.science/w/grace-70BB/static/images/social_preview.png">
+  <meta name="twitter:image:alt" content="GRACE project page preview">
+
+  <meta name="citation_title" content="GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Estimation">
+  <meta name="citation_author" content="Anonymous, Authors">
+  <meta name="citation_publication_date" content="2026">
+  <meta name="citation_conference_title" content="Under Review">
+  <meta name="citation_pdf_url" content="https://anonymous.4open.science/w/grace-70BB/static/pdfs/grace_paper.pdf">
+
+  <meta name="theme-color" content="#2563eb">
+  <meta name="msapplication-TileColor" content="#2563eb">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://ajax.googleapis.com">
+  <link rel="preconnect" href="https://documentcloud.adobe.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+  <title>GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Estimation | Project Page</title>
+
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="apple-touch-icon" href="static/images/favicon.ico">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <link rel="preload" href="static/css/bulma-carousel.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+  <noscript>
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  </noscript>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/bulma-carousel.min.js"></script>
+  <script defer src="static/js/bulma-slider.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Estimation",
+    "description": "GRACE guides diffusion policies with MPPI using only forward cost evaluations, enabling constraint-aware robot action generation without gradients, retraining, or differentiable costs.",
+    "author": [{"@type": "Person", "name": "Anonymous Authors"}],
+    "datePublished": "2026-01-01",
+    "publisher": {"@type": "Organization", "name": "Under Review"},
+    "url": "https://anonymous.4open.science/w/grace-70BB/",
+    "image": "https://anonymous.4open.science/w/grace-70BB/static/images/social_preview.png",
+    "keywords": ["diffusion models", "model predictive path integral control", "motion planning", "posterior sampling", "gradient-free optimization"],
+    "abstract": "Diffusion policies generate multimodal robot action sequences from demonstrations, but steering them toward deployment-time constraints typically relies on differentiable guidance costs. This excludes many practical safety constraints, such as binary collision checks, joint limits, and black-box rollout costs, that are nondifferentiable. We propose Gradient-free Robot Action generation via Combined diffusion–MPPI posterior Estimation (GRACE), which guides a pretrained diffusion policy with Model Predictive Path Integral (MPPI) control using only forward cost evaluations. We show that the diffusion reverse step and the MPPI update share a common score-ascent structure. This lets us recast each constrained reverse step as a Bayesian posterior and approximate its mean with a single MPPI update centered at the diffusion prior mean, integrated directly into denoising rather than wrapped around it as an outer loop. Under this view, gradient guidance emerges as a special case that holds only when the cost is differentiable. GRACE thus enables constraint-aware generation without retraining the diffusion model or designing differentiable surrogates. Across simulation and real-world robot experiments, GRACE attains higher success rates and fewer safety violations than both gradient-guided diffusion policies and sampling-based planners.",
+    "citation": "@article{anonymous2026grace, title={GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Estimation}, author={Anonymous Authors}, journal={Under Review}, year={2026}}",
+    "isAccessibleForFree": true,
+    "license": "https://creativecommons.org/licenses/by/4.0/"
+  }
+  </script>
+</head>
+<body>
+
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <main id="main-content">
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h1 class="title is-1 publication-title">GRACE: Gradient-Free Robot Action Generation<br>via Combined Diffusion–MPPI Posterior Estimation</h1>
+
+              <div class="is-size-5 publication-authors">
+                <span class="author-block">Anonymous Authors</span>
+              </div>
+
+              <div class="is-size-5 publication-authors">
+                <span class="author-block">Under Review</span>
+              </div>
+
+              <div class="column has-text-centered">
+                <div class="publication-links">
+                  <span class="link-block">
+                    <a href="static/pdfs/grace_paper.pdf" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                      <span>Paper</span>
+                    </a>
+                  </span>
+
+                  <span class="link-block">
+                    <a href="static/models/trained_model.zip" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon"><i class="fas fa-brain"></i></span>
+                      <span>Trained Model</span>
+                    </a>
+                  </span>
+
+                  <span class="link-block">
+                    <a href="static/data/training_data.zip" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon"><i class="fas fa-database"></i></span>
+                      <span>Training Data</span>
+                    </a>
+                  </span>
+
+                  <span class="link-block">
+                    <a class="external-link button is-normal is-rounded is-dark" aria-disabled="true" style="pointer-events: none; opacity: 0.65;">
+                      <span class="icon"><i class="fab fa-github"></i></span>
+                      <span>Code (Coming Soon)</span>
+                    </a>
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Teaser video -->
+    <section class="hero teaser">
+      <div class="container is-max-desktop">
+        <div class="hero-body">
+          <!-- Recommended video: overall highlight reel -->
+          <video poster="static/images/fig5.png" id="teaser-video" autoplay controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/banner_video.mp4" type="video/mp4">
+          </video>
+          <h2 class="subtitle has-text-centered">
+            GRACE combines a multimodal diffusion prior with gradient-free MPPI guidance to generate constraint-aware robot actions under unseen deployment-time constraints, without retraining and without differentiating the cost.
+          </h2>
+        </div>
+      </div>
+    </section>
+
+    <!-- Abstract -->
+    <section class="section hero is-light">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>Diffusion policies generate multimodal robot action sequences from demonstrations, but steering them toward deployment-time constraints typically relies on differentiable guidance costs. This excludes many practical safety constraints, such as binary collision checks, joint limits, and black-box rollout costs, that are nondifferentiable. We propose <b>Gradient-free Robot Action generation via Combined diffusion–MPPI posterior Estimation (GRACE)</b>, which guides a pretrained diffusion policy with Model Predictive Path Integral (MPPI) control using only forward cost evaluations. We show that the diffusion reverse step and the MPPI update share a common score-ascent structure. This lets us recast each constrained reverse step as a Bayesian posterior and approximate its mean with a single MPPI update centered at the diffusion prior mean, integrated directly into denoising rather than wrapped around it as an outer loop. Under this view, gradient guidance emerges as a special case that holds only when the cost is differentiable. GRACE thus enables constraint-aware generation without retraining the diffusion model or designing differentiable surrogates. Across simulation and real-world robot experiments, GRACE attains higher success rates and fewer safety violations than both gradient-guided diffusion policies and sampling-based planners.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Method overview -->
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-four-fifths has-text-centered">
+            <h2 class="title is-3">Method Overview</h2>
+            <!-- Put paper Fig. 2 here -->
+            <img src="static/images/fig2.png" alt="GRACE inference pipeline" loading="lazy">
+            <p class="content has-text-justified" style="margin-top: 1rem; line-height: 1.6;">
+              <b>Fig. 2.</b> GRACE inference pipeline. A pretrained diffusion prior proposes an action-sequence distribution, and at each reverse step an MPPI update reweights sampled candidates using deployment-time constraint costs. This directly steers reverse diffusion toward constraint-aware actions without differentiating the cost or the dynamics.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key results -->
+    <section class="section is-light">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered">Key Results and Visualizations</h2>
+
+        <div class="columns is-centered">
+          <div class="column is-four-fifths has-text-centered">
+            <figure class="image">
+              <!-- Put the combined Fig. 4(a,b) image here -->
+              <img src="static/images/fig4.png" alt="2D trajectory modes and representative GRACE trajectories" loading="lazy">
+            </figure>
+            <p class="content has-text-justified" style="margin-top: 0.75rem; line-height: 1.6;">
+              <b>Fig. 4.</b> 2D point-mass navigation results. The mode-count bar chart summarizes trajectory diversity, while the representative trajectories show the distinct detours produced by GRACE. Together, these results show that GRACE preserves multimodality while biasing the prior toward constraint-satisfying solutions.
+            </p>
+          </div>
+        </div>
+
+        <br>
+
+        <div class="columns is-centered">
+          <div class="column is-full has-text-centered">
+            <figure class="image" style="max-width: 1200px; margin: 0 auto;">
+              <!-- Put Fig. 5 here, or use it as the poster for the 3D videos below -->
+              <img src="static/images/fig5.png" alt="3D FR3 execution snapshots" loading="lazy" style="width: 100%; height: auto;">
+            </figure>
+            <p class="content has-text-justified" style="margin-top: 0.75rem; line-height: 1.6;">
+              <b>Fig. 5.</b> Representative FR3 execution snapshots. GRACE reaches the target while satisfying obstacle avoidance, self-collision avoidance, floor-contact avoidance, and joint-limit constraints.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quantitative table -->
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-full">
+            <h2 class="title is-3 has-text-centered">3D Quantitative Results</h2>
+            <div class="content has-text-justified">
+              <p>
+                <b>Table III.</b> Quantitative comparison in the 7-DoF FR3 manipulator goal-reaching task.
+              </p>
+            </div>
+
+            <div class="table-container">
+              <table class="table is-fullwidth is-striped is-hoverable is-bordered">
+                <thead>
+                  <tr>
+                    <th>Method</th>
+                    <th>Success [%]</th>
+                    <th>Computation Time [ms]</th>
+                    <th>Guidance Time [ms]</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>CEM</td>
+                    <td>24/30 (80.0%)</td>
+                    <td>153.45</td>
+                    <td>—</td>
+                  </tr>
+                  <tr>
+                    <td>MPPI</td>
+                    <td>23/30 (76.7%)</td>
+                    <td>29.88</td>
+                    <td>—</td>
+                  </tr>
+                  <tr>
+                    <td>DA-MPPI</td>
+                    <td>23/30 (76.7%)</td>
+                    <td>154.22</td>
+                    <td>—</td>
+                  </tr>
+                  <tr>
+                    <td>PO-DP</td>
+                    <td>11/30 (36.7%)</td>
+                    <td>647.30</td>
+                    <td>220.01</td>
+                  </tr>
+                  <tr>
+                    <td>GG-DP</td>
+                    <td>15/30 (50.0%)</td>
+                    <td>671.59</td>
+                    <td>244.72</td>
+                  </tr>
+                  <tr>
+                    <td><b>GRACE (CNN)</b></td>
+                    <td><b>27/30 (90.0%)</b></td>
+                    <td>179.23</td>
+                    <td>90.53</td>
+                  </tr>
+                  <tr>
+                    <td><b>GRACE (UNet)</b></td>
+                    <td><b>27/30 (90.0%)</b></td>
+                    <td>497.64</td>
+                    <td><b>85.88</b></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="content has-text-justified">
+              <p>
+                GRACE achieves the best success rate in the 3D FR3 task, reaching <b>90.0%</b> for both backbones while avoiding the broad range of safety failures observed in gradient-guided baselines. Compared with PO-DP and GG-DP, GRACE also reduces guidance time while preserving the feasibility of the diffusion prior.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experiment videos -->
+    <section class="hero is-small is-light">
+      <div class="hero-body">
+        <div class="container">
+          <h2 class="title is-3 has-text-centered">Experiment Videos</h2>
+          <div id="results-carousel" class="carousel results-carousel">
+            <div class="item item-video1">
+              <video poster="static/images/fig4.png" id="video1" controls muted loop height="100%" preload="metadata">
+                <source src="static/videos/2d_point_mass.mp4" type="video/mp4">
+              </video>
+              <h2 class="subtitle has-text-justified">
+                2D point-mass navigation under unseen obstacles.
+              </h2>
+            </div>
+
+            <div class="item item-video2">
+              <video poster="static/images/fig5.png" id="video2" controls muted loop height="100%" preload="metadata">
+                <source src="static/videos/fr3_simulation.mp4" type="video/mp4">
+              </video>
+              <h2 class="subtitle has-text-justified">
+                3D FR3 simulation showing constraint-aware goal-reaching.
+              </h2>
+            </div>
+
+            <div class="item item-video3">
+              <video poster="static/images/fig5.png" id="video3" controls muted loop height="100%" preload="metadata">
+                <source src="static/videos/fr3_real_world.mp4" type="video/mp4">
+              </video>
+              <h2 class="subtitle has-text-justified">
+                Real-world FR3 deployment without retraining or differentiable guidance.
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BibTeX -->
+    <section class="section" id="BibTeX">
+      <div class="container is-max-desktop content">
+        <div class="bibtex-header">
+          <h2 class="title">BibTeX</h2>
+          <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
+            <i class="fas fa-copy"></i>
+            <span class="copy-text">Copy</span>
+          </button>
+        </div>
+        <pre id="bibtex-code"><code>@article{anonymous2026grace,
+  title={GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Estimation},
+  author={Anonymous Authors},
+  journal={Under Review},
+  year={2026},
+  url={https://anonymous.4open.science/w/grace-70BB/}
+}</code></pre>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
