@@ -6,20 +6,27 @@
 
   <!-- =============================================================
        GRACE anonymous project page
-       Replace the anonymous.4open.science ID after you regenerate it.
+       Target venue: IEEE Robotics and Automation Letters (RA-L), Submitted.
        Keep author/institution information removed for double-anonymous review.
-       Required assets for this version:
-       - static/images/fig2.png
-       - static/images/fig4.png
-       - static/images/fig5.png
-       - static/images/social_preview.png
+       Replace the anonymous.4open.science ID after you regenerate it.
+
+       Assets present in static/:
+       - static/images/fig1.jpg          (core idea, shown with the abstract)
+       - static/images/fig2.png          (method / inference pipeline)
+       - static/images/fig4.png          (2D mode diversity + trajectories)
+       - static/images/fig5.png          (FR3 execution snapshots)
        - static/images/favicon.ico
        - static/pdfs/grace_paper.pdf
-       - static/assets/model_and_data.zip
-       - static/videos/banner_video.mp4
-       - static/videos/2d_point_mass.mp4
-       - static/videos/fr3_simulation.mp4
-       - static/videos/fr3_real_world.mp4
+       - static/videos/banner_video.mp4  (overview reel, top of page)
+       - static/videos/carousel1.mp4     (2D point-mass simulation)
+       - static/videos/carousel2.mp4     (FR3 tracking simulation)
+       - static/videos/carousel3.mp4     (FR3 real-world, video #1)
+
+       ASSETS TO ADD before release (no poster; show a blank frame until added):
+       - static/videos/denoising_tracking.mp4  (Contributions: per-step evolution of
+                                                 prior mean / MPPI samples / posterior mean / next iterate)
+       - static/videos/real_world_2.mp4        (Real-World Experiments: second clip)
+       - Fill in the real-world Success Rate table (values are placeholders / TBD).
        ============================================================= -->
 
   <meta name="title" content="GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Estimation">
@@ -34,9 +41,7 @@
   <meta property="og:title" content="GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Estimation">
   <meta property="og:description" content="GRACE combines a multimodal diffusion prior with MPPI-based gradient-free guidance for constraint-aware robot action generation.">
   <meta property="og:url" content="https://anonymous.4open.science/w/grace-70BB/">
-  <meta property="og:image" content="https://anonymous.4open.science/w/grace-70BB/static/images/social_preview.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
+  <meta property="og:image" content="https://anonymous.4open.science/w/grace-70BB/static/images/fig1.jpg">
   <meta property="og:image:alt" content="GRACE project page preview">
   <meta property="article:published_time" content="2026-01-01T00:00:00.000Z">
   <meta property="article:author" content="Anonymous Authors">
@@ -49,13 +54,13 @@
   <meta name="twitter:creator" content="@anonymous">
   <meta name="twitter:title" content="GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Estimation">
   <meta name="twitter:description" content="Constraint-aware diffusion planning with gradient-free MPPI guidance.">
-  <meta name="twitter:image" content="https://anonymous.4open.science/w/grace-70BB/static/images/social_preview.png">
+  <meta name="twitter:image" content="https://anonymous.4open.science/w/grace-70BB/static/images/fig1.jpg">
   <meta name="twitter:image:alt" content="GRACE project page preview">
 
   <meta name="citation_title" content="GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Estimation">
   <meta name="citation_author" content="Anonymous, Authors">
   <meta name="citation_publication_date" content="2026">
-  <meta name="citation_conference_title" content="Under Review">
+  <meta name="citation_journal_title" content="IEEE Robotics and Automation Letters (RA-L)">
   <meta name="citation_pdf_url" content="https://anonymous.4open.science/w/grace-70BB/static/pdfs/grace_paper.pdf">
 
   <meta name="theme-color" content="#2563eb">
@@ -105,12 +110,12 @@
     "description": "GRACE guides diffusion policies with MPPI using only forward cost evaluations, enabling constraint-aware robot action generation without gradients, retraining, or differentiable costs.",
     "author": [{"@type": "Person", "name": "Anonymous Authors"}],
     "datePublished": "2026-01-01",
-    "publisher": {"@type": "Organization", "name": "Under Review"},
+    "publisher": {"@type": "Organization", "name": "IEEE Robotics and Automation Letters (RA-L), Submitted"},
     "url": "https://anonymous.4open.science/w/grace-70BB/",
-    "image": "https://anonymous.4open.science/w/grace-70BB/static/images/social_preview.png",
+    "image": "https://anonymous.4open.science/w/grace-70BB/static/images/fig1.jpg",
     "keywords": ["diffusion models", "model predictive path integral control", "motion planning", "posterior sampling", "gradient-free optimization"],
     "abstract": "Diffusion policies generate multimodal robot action sequences from demonstrations, but steering them toward deployment-time constraints typically relies on differentiable guidance costs. This excludes many practical safety constraints, such as binary collision checks, joint limits, and black-box rollout costs, that are nondifferentiable. We propose Gradient-free Robot Action generation via Combined diffusion–MPPI posterior Estimation (GRACE), which guides a pretrained diffusion policy with Model Predictive Path Integral (MPPI) control using only forward cost evaluations. We show that the diffusion reverse step and the MPPI update share a common score-ascent structure. This lets us recast each constrained reverse step as a Bayesian posterior and approximate its mean with a single MPPI update centered at the diffusion prior mean, integrated directly into denoising rather than wrapped around it as an outer loop. Under this view, gradient guidance emerges as a special case that holds only when the cost is differentiable. GRACE thus enables constraint-aware generation without retraining the diffusion model or designing differentiable surrogates. Across simulation and real-world robot experiments, GRACE attains higher success rates and fewer safety violations than both gradient-guided diffusion policies and sampling-based planners.",
-    "citation": "@article{anonymous2026grace, title={GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Estimation}, author={Anonymous Authors}, journal={Under Review}, year={2026}}",
+    "citation": "@article{anonymous2026grace, title={GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Estimation}, author={Anonymous Authors}, journal={IEEE Robotics and Automation Letters (RA-L)}, note={Submitted}, year={2026}}",
     "isAccessibleForFree": true,
     "license": "https://creativecommons.org/licenses/by/4.0/"
   }
@@ -123,6 +128,7 @@
   </button>
 
   <main id="main-content">
+    <!-- ===================== Title ===================== -->
     <section class="hero">
       <div class="hero-body">
         <div class="container is-max-desktop">
@@ -138,7 +144,7 @@
               </div>
 
               <div class="is-size-5 publication-authors">
-                <span class="author-block">Under Review</span>
+                <span class="author-block">Submitted to IEEE Robotics and Automation Letters (RA-L)</span>
               </div>
 
               <div class="column has-text-centered">
@@ -151,9 +157,9 @@
                   </span>
 
                   <span class="link-block">
-                    <a href="static/assets/model_and_data.zip" target="_blank" class="external-link button is-normal is-rounded is-dark">
-                      <span class="icon"><i class="fas fa-database"></i></span>
-                      <span>Model &amp; Data</span>
+                    <a class="external-link button is-normal is-rounded is-dark" aria-disabled="true" style="pointer-events: none; opacity: 0.65;">
+                      <span class="icon"><i class="ai ai-arxiv"></i></span>
+                      <span>arXiv (Coming Soon)</span>
                     </a>
                   </span>
 
@@ -172,22 +178,19 @@
       </div>
     </section>
 
-    <!-- Teaser video -->
+    <!-- ===================== Overview video (top) ===================== -->
     <section class="hero teaser">
       <div class="container is-max-desktop">
         <div class="hero-body">
-          <!-- Recommended video: overall highlight reel -->
-          <video poster="static/images/fig5.png" id="teaser-video" autoplay controls muted loop height="100%" preload="metadata">
+          <h2 class="title is-3 has-text-centered">Overview</h2>
+          <video poster="static/images/fig1.jpg" id="teaser-video" autoplay controls muted loop height="100%" preload="metadata">
             <source src="static/videos/banner_video.mp4" type="video/mp4">
           </video>
-          <h2 class="subtitle has-text-centered">
-            GRACE combines a multimodal diffusion prior with gradient-free MPPI guidance to generate constraint-aware robot actions under unseen deployment-time constraints, without retraining and without differentiating the cost.
-          </h2>
         </div>
       </div>
     </section>
 
-    <!-- Abstract -->
+    <!-- ===================== Abstract + fig1 ===================== -->
     <section class="section hero is-light">
       <div class="container is-max-desktop">
         <div class="columns is-centered has-text-centered">
@@ -198,175 +201,216 @@
             </div>
           </div>
         </div>
+
+        <div class="columns is-centered">
+          <div class="column is-four-fifths has-text-centered">
+            <figure class="image">
+              <img src="static/images/fig1.jpg" alt="GRACE core idea: a multimodal diffusion prior decides which way to go, gradient-free guidance decides how to stay safe" loading="lazy">
+            </figure>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- Method overview -->
+    <!-- ===================== Contributions (+ denoising video) ===================== -->
     <section class="section">
       <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered">Contributions</h2>
+        <div class="columns is-centered">
+          <div class="column is-four-fifths">
+            <div class="content is-size-5" style="line-height: 1.7;">
+              <ul>
+                <li><b>Unifying diffusion and MPPI for guidance.</b> The score-ascent structure shared by the two updates is exploited to integrate the sampling-based guidance of MPPI directly into the diffusion reverse step, rather than wrapping it around the model as an outer loop.</li>
+                <li><b>Constraint-aware generation without gradients.</b> Each constrained reverse step is formulated as a Bayesian posterior whose Gaussian approximation is an MPPI update centered at the diffusion prior mean, enabling guidance under nondifferentiable costs without differentiable surrogates or retraining.</li>
+                <li><b>Improved success and safety.</b> GRACE is validated in simulation and on real hardware, attaining higher success rates and fewer safety violations than gradient-guided diffusion and sampling-based baselines while preserving the multimodality of the prior.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
         <div class="columns is-centered">
           <div class="column is-four-fifths has-text-centered">
-            <h2 class="title is-3">Method Overview</h2>
-            <!-- Put paper Fig. 2 here -->
-            <img src="static/images/fig2.png" alt="GRACE inference pipeline" loading="lazy">
+            <video id="denoising-video" controls autoplay muted loop preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/denoising_tracking.mp4" type="video/mp4">
+            </video>
             <p class="content has-text-justified" style="margin-top: 1rem; line-height: 1.6;">
-              <b>Fig. 2.</b> GRACE inference pipeline. A pretrained diffusion prior proposes an action-sequence distribution, and at each reverse step an MPPI update reweights sampled candidates using deployment-time constraint costs. This directly steers reverse diffusion toward constraint-aware actions without differentiating the cost or the dynamics.
+              <b>Guided denoising in action.</b> For a tracking rollout, we visualize how a single action sequence is refined over the reverse-diffusion process. At every denoising step, and for every action along the horizon, the video shows the <b>diffusion prior mean</b> proposed by the pretrained policy, the <b>MPPI rollout samples</b> drawn around it, the <b>gradient-free posterior mean</b> obtained by reweighting those samples with the constraint cost, and the <b>sampled next iterate</b> passed to the following step. The prior decides the overall route while the posterior correction bends it away from constraint violations, all without differentiating the cost.
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Key results -->
+    <!-- ===================== Method + fig2 ===================== -->
     <section class="section is-light">
       <div class="container is-max-desktop">
-        <h2 class="title is-3 has-text-centered">Key Results and Visualizations</h2>
+        <div class="columns is-centered">
+          <div class="column is-full has-text-centered">
+            <h2 class="title is-3">Method</h2>
+            <figure class="image" style="max-width: 1100px; margin: 0 auto 1.25rem;">
+              <img src="static/images/fig2.png" alt="GRACE inference pipeline" loading="lazy" style="width: 100%; height: auto;">
+            </figure>
+            <div class="content has-text-justified" style="line-height: 1.7;">
+              <ul>
+                <li><b>Diffusion and MPPI as score ascent.</b> The diffusion reverse mean can be written as a step that ascends the score of the noised data marginal, and the MPPI optimal update equals the prior mean plus a covariance-scaled score of the cost-induced distribution. Both advance the iterate along a scaled score, learned offline from demonstrations for diffusion and estimated online from cost rollouts for MPPI.</li>
+                <li><b>Constraint-conditioned reverse posterior.</b> We treat constraint satisfaction as a conditioning event and apply Bayes' rule to the reverse step. With a Boltzmann likelihood on the rollout cost, the posterior becomes a cost factor multiplying the Gaussian reverse kernel, the same product form as the MPPI optimal distribution but centered at the diffusion prior mean.</li>
+                <li><b>Gaussian approximation via KL minimization.</b> Because the cost contains binary, piecewise-constant terms, this posterior is non-Gaussian and intractable. We project it onto a Gaussian that keeps the diffusion reverse covariance and optimizes only the mean; KL minimization matches the posterior's first moment, a ratio of cost-weighted expectations estimated with the MPPI update centered at the prior mean.</li>
+                <li><b>Decoupled guidance covariance.</b> The denoising schedule drives the reverse covariance to zero, so rollout perturbations would vanish as the action sequence is finalized. We instead draw rollouts from a separate guidance covariance and importance-reweight them, setting the exploration scale independently of the schedule.</li>
+                <li><b>Gradient guidance as a special case.</b> Linearizing the task log-likelihood around the prior mean collapses the correction to a single analytic gradient direction, exactly classical gradient guidance, which requires differentiating both the cost and the dynamics. GRACE makes no such assumption and estimates the posterior mean from forward rollouts, extending the same update to nondifferentiable costs.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== Simulation results ===================== -->
+    <section class="section">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered">Simulation Experiments</h2>
+
+        <!-- Point-mass -->
+        <div class="columns is-centered">
+          <div class="column is-four-fifths">
+            <h3 class="title is-4 has-text-centered" style="margin-bottom: 0.75rem;">Point-Mass Navigation</h3>
+            <p class="content has-text-justified" style="line-height: 1.6;">
+              A planar point mass must reach a goal in a cluttered map, where additional obstacles absent during training appear only at inference time. A trial succeeds if the point mass reaches the goal without collision or timeout.
+            </p>
+          </div>
+        </div>
+
+        <div class="columns is-centered">
+          <div class="column is-four-fifths has-text-centered">
+            <video poster="static/images/fig4.png" id="video-2d" controls muted loop preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/carousel1.mp4" type="video/mp4">
+            </video>
+            <p class="content has-text-centered" style="margin-top: 0.5rem;">GRACE navigating around unseen obstacles in the point-mass task.</p>
+          </div>
+        </div>
 
         <div class="columns is-centered">
           <div class="column is-four-fifths has-text-centered">
             <figure class="image">
-              <!-- Put the combined Fig. 4(a,b) image here -->
               <img src="static/images/fig4.png" alt="2D trajectory modes and representative GRACE trajectories" loading="lazy">
             </figure>
             <p class="content has-text-justified" style="margin-top: 0.75rem; line-height: 1.6;">
-              <b>Fig. 4.</b> 2D point-mass navigation results. The mode-count bar chart summarizes trajectory diversity, while the representative trajectories show the distinct detours produced by GRACE. Together, these results show that GRACE preserves multimodality while biasing the prior toward constraint-satisfying solutions.
+              GRACE preserves the multimodality of the prior, producing several distinct detours, while biasing it toward lower-cost, constraint-satisfying paths instead of collapsing onto a single route.
             </p>
+          </div>
+        </div>
+
+        <div class="columns is-centered">
+          <div class="column is-three-fifths">
+            <div class="table-container">
+              <table class="table is-fullwidth is-striped is-hoverable is-bordered">
+                <thead>
+                  <tr><th>Method</th><th>Success [%]</th><th>Collision Fail</th><th>Path Length [m]</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>CEM</td><td>8/30 (26.7%)</td><td>0/30</td><td>1.247</td></tr>
+                  <tr><td>MPPI</td><td>8/30 (26.7%)</td><td>0/30</td><td>1.241</td></tr>
+                  <tr><td>DA-MPPI</td><td>8/30 (26.7%)</td><td>0/30</td><td>1.233</td></tr>
+                  <tr><td>PO-DP</td><td>18/30 (60.0%)</td><td>12/30</td><td>2.657</td></tr>
+                  <tr><td>GG-DP</td><td>18/30 (60.0%)</td><td>12/30</td><td>2.302</td></tr>
+                  <tr><td><b>GRACE (CNN)</b></td><td><b>20/30 (66.7%)</b></td><td><b>0/30</b></td><td>3.681</td></tr>
+                  <tr><td><b>GRACE (UNet)</b></td><td><b>25/30 (83.3%)</b></td><td>2/30</td><td>3.372</td></tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
         <br>
 
+        <!-- Tracking (FR3) -->
         <div class="columns is-centered">
-          <div class="column is-full has-text-centered">
-            <figure class="image" style="max-width: 1200px; margin: 0 auto;">
-              <!-- Put Fig. 5 here, or use it as the poster for the 3D videos below -->
-              <img src="static/images/fig5.png" alt="3D FR3 execution snapshots" loading="lazy" style="width: 100%; height: auto;">
-            </figure>
-            <p class="content has-text-justified" style="margin-top: 0.75rem; line-height: 1.6;">
-              <b>Fig. 5.</b> Representative FR3 execution snapshots. GRACE reaches the target while satisfying obstacle avoidance, self-collision avoidance, floor-contact avoidance, and joint-limit constraints.
+          <div class="column is-four-fifths">
+            <h3 class="title is-4 has-text-centered" style="margin-bottom: 0.75rem;">Manipulator Tracking</h3>
+            <p class="content has-text-justified" style="line-height: 1.6;">
+              A 7-DoF Franka Research 3 (FR3) manipulator must reach goal joint configurations among randomly placed 3D obstacles, satisfying obstacle, self-collision, floor-contact, and joint-limit constraints, all introduced only at inference time. A trial succeeds if the target is reached without any safety violation or timeout.
+            </p>
+          </div>
+        </div>
+
+        <div class="columns is-centered">
+          <div class="column is-four-fifths has-text-centered">
+            <video poster="static/images/fig5.png" id="video-fr3-sim" controls muted loop preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/carousel2.mp4" type="video/mp4">
+            </video>
+            <p class="content has-text-centered" style="margin-top: 0.5rem;">GRACE reaching the target while satisfying all safety constraints in simulation.</p>
+          </div>
+        </div>
+
+        <div class="columns is-centered">
+          <div class="column is-full">
+            <div class="table-container">
+              <table class="table is-fullwidth is-striped is-hoverable is-bordered">
+                <thead>
+                  <tr><th>Method</th><th>Success [%]</th><th>Computation Time [ms]</th><th>Guidance Time [ms]</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>CEM</td><td>24/30 (80.0%)</td><td>153.45</td><td>—</td></tr>
+                  <tr><td>MPPI</td><td>23/30 (76.7%)</td><td>29.88</td><td>—</td></tr>
+                  <tr><td>DA-MPPI</td><td>23/30 (76.7%)</td><td>154.22</td><td>—</td></tr>
+                  <tr><td>PO-DP</td><td>11/30 (36.7%)</td><td>647.30</td><td>220.01</td></tr>
+                  <tr><td>GG-DP</td><td>15/30 (50.0%)</td><td>671.59</td><td>244.72</td></tr>
+                  <tr><td><b>GRACE (CNN)</b></td><td><b>27/30 (90.0%)</b></td><td>179.23</td><td>90.53</td></tr>
+                  <tr><td><b>GRACE (UNet)</b></td><td><b>27/30 (90.0%)</b></td><td>497.64</td><td><b>85.88</b></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="content has-text-justified" style="line-height: 1.6;">
+              GRACE reaches the best success rate, <b>90.0%</b> for both backbones, with no violation of self-collision, floor-contact, or joint-limit constraints, and does so at a lower guidance cost than the gradient-guided diffusion policies. Because gradient guidance merges all safety penalties into a single update direction, it leaves some constraints unsatisfied and scatters failures across every mode; GRACE instead reweights complete rollouts toward lower total cost and avoids these failures.
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Quantitative table -->
-    <section class="section">
+    <!-- ===================== Real-world experiments ===================== -->
+    <section class="section is-light">
       <div class="container is-max-desktop">
-        <div class="columns is-centered">
-          <div class="column is-full">
-            <h2 class="title is-3 has-text-centered">3D Quantitative Results</h2>
-            <div class="content has-text-justified">
-              <p>
-                <b>Table III.</b> Quantitative comparison in the 7-DoF FR3 manipulator goal-reaching task.
-              </p>
-            </div>
+        <h2 class="title is-3 has-text-centered">Real-World Experiments</h2>
+        <p class="content has-text-centered" style="max-width: 820px; margin: 0 auto 1.5rem;">
+          We deploy GRACE on a physical 7-DoF FR3 manipulator using the same diffusion prior and guidance procedure as in simulation, without any retraining or fine-tuning. Obstacles are placed in the workspace and all collision avoidance is supplied online through the gradient-free guidance term.
+        </p>
 
+        <div class="columns is-centered">
+          <div class="column is-half has-text-centered">
+            <video poster="static/images/fig5.png" id="video-real-1" controls muted loop preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/carousel3.mp4" type="video/mp4">
+            </video>
+            <p class="content has-text-centered" style="margin-top: 0.5rem;">Real-world deployment, scenario 1.</p>
+          </div>
+          <div class="column is-half has-text-centered">
+            <video poster="static/images/fig5.png" id="video-real-2" controls muted loop preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/real_world_2.mp4" type="video/mp4">
+            </video>
+            <p class="content has-text-centered" style="margin-top: 0.5rem;">Real-world deployment, scenario 2.</p>
+          </div>
+        </div>
+
+        <p class="content has-text-centered"><b>Real-world success rate: GRACE vs. a standard diffusion policy.</b></p>
+        <!-- TODO: replace TBD with the measured real-world success rates. -->
+        <div class="columns is-centered">
+          <div class="column is-half">
             <div class="table-container">
-              <table class="table is-fullwidth is-striped is-hoverable is-bordered">
+              <table class="table is-fullwidth is-striped is-hoverable is-bordered has-text-centered">
                 <thead>
-                  <tr>
-                    <th>Method</th>
-                    <th>Success [%]</th>
-                    <th>Computation Time [ms]</th>
-                    <th>Guidance Time [ms]</th>
-                  </tr>
+                  <tr><th>Method</th><th>Success Rate</th></tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>CEM</td>
-                    <td>24/30 (80.0%)</td>
-                    <td>153.45</td>
-                    <td>—</td>
-                  </tr>
-                  <tr>
-                    <td>MPPI</td>
-                    <td>23/30 (76.7%)</td>
-                    <td>29.88</td>
-                    <td>—</td>
-                  </tr>
-                  <tr>
-                    <td>DA-MPPI</td>
-                    <td>23/30 (76.7%)</td>
-                    <td>154.22</td>
-                    <td>—</td>
-                  </tr>
-                  <tr>
-                    <td>PO-DP</td>
-                    <td>11/30 (36.7%)</td>
-                    <td>647.30</td>
-                    <td>220.01</td>
-                  </tr>
-                  <tr>
-                    <td>GG-DP</td>
-                    <td>15/30 (50.0%)</td>
-                    <td>671.59</td>
-                    <td>244.72</td>
-                  </tr>
-                  <tr>
-                    <td><b>GRACE (CNN)</b></td>
-                    <td><b>27/30 (90.0%)</b></td>
-                    <td>179.23</td>
-                    <td>90.53</td>
-                  </tr>
-                  <tr>
-                    <td><b>GRACE (UNet)</b></td>
-                    <td><b>27/30 (90.0%)</b></td>
-                    <td>497.64</td>
-                    <td><b>85.88</b></td>
-                  </tr>
+                  <tr><td>Diffusion Policy</td><td>TBD</td></tr>
+                  <tr><td><b>GRACE (Ours)</b></td><td><b>TBD</b></td></tr>
                 </tbody>
               </table>
             </div>
-
-            <div class="content has-text-justified">
-              <p>
-                GRACE achieves the best success rate in the 3D FR3 task, reaching <b>90.0%</b> for both backbones while avoiding the broad range of safety failures observed in gradient-guided baselines. Compared with PO-DP and GG-DP, GRACE also reduces guidance time while preserving the feasibility of the diffusion prior.
-              </p>
-            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Experiment videos -->
-    <section class="hero is-small is-light">
-      <div class="hero-body">
-        <div class="container">
-          <h2 class="title is-3 has-text-centered">Experiment Videos</h2>
-          <div id="results-carousel" class="carousel results-carousel">
-            <div class="item item-video1">
-              <video poster="static/images/fig4.png" id="video1" controls muted loop height="100%" preload="metadata">
-                <source src="static/videos/2d_point_mass.mp4" type="video/mp4">
-              </video>
-              <h2 class="subtitle has-text-justified">
-                2D point-mass navigation under unseen obstacles.
-              </h2>
-            </div>
-
-            <div class="item item-video2">
-              <video poster="static/images/fig5.png" id="video2" controls muted loop height="100%" preload="metadata">
-                <source src="static/videos/fr3_simulation.mp4" type="video/mp4">
-              </video>
-              <h2 class="subtitle has-text-justified">
-                3D FR3 simulation showing constraint-aware goal-reaching.
-              </h2>
-            </div>
-
-            <div class="item item-video3">
-              <video poster="static/images/fig5.png" id="video3" controls muted loop height="100%" preload="metadata">
-                <source src="static/videos/fr3_real_world.mp4" type="video/mp4">
-              </video>
-              <h2 class="subtitle has-text-justified">
-                Real-world FR3 deployment without retraining or differentiable guidance.
-              </h2>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- BibTeX -->
+    <!-- ===================== BibTeX ===================== -->
     <section class="section" id="BibTeX">
       <div class="container is-max-desktop content">
         <div class="bibtex-header">
@@ -379,7 +423,8 @@
         <pre id="bibtex-code"><code>@article{anonymous2026grace,
   title={GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Estimation},
   author={Anonymous Authors},
-  journal={Under Review},
+  journal={IEEE Robotics and Automation Letters (RA-L)},
+  note={Submitted},
   year={2026},
   url={https://anonymous.4open.science/w/grace-70BB/}
 }</code></pre>
