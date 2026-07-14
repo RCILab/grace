@@ -90,53 +90,73 @@ window.addEventListener('scroll', function() {
     }
 });
 
-// Video carousel autoplay when in view
-function setupVideoCarouselAutoplay() {
-    const carouselVideos = document.querySelectorAll('.results-carousel video');
-    
-    if (carouselVideos.length === 0) return;
-    
+// Play every video while it is on screen, and pause it once it scrolls away.
+//
+// The videos loop forever, so this is autoplay without the cost of it: an `autoplay`
+// attribute makes the browser fetch each clip at page load, and the real-world and book
+// clips alone are tens of megabytes. Here they stay at preload="metadata" until they are
+// about to come into view, and only the clip you are looking at is decoding.
+function setupVideoAutoplay() {
+    const videos = document.querySelectorAll('main video');
+    if (videos.length === 0) return;
+
+    if (!('IntersectionObserver' in window)) {
+        // No observer: fall back to playing everything and let the browser sort it out.
+        videos.forEach(video => video.play().catch(() => {}));
+        return;
+    }
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             const video = entry.target;
             if (entry.isIntersecting) {
-                // Video is in view, play it
-                video.play().catch(e => {
-                    // Autoplay failed, probably due to browser policy
-                    console.log('Autoplay prevented:', e);
-                });
+                if (video.preload !== 'auto') video.preload = 'auto';
+                // Autoplay is only allowed while muted, and a user may have unmuted this one.
+                video.play().catch(() => {});
             } else {
-                // Video is out of view, pause it
                 video.pause();
             }
         });
     }, {
-        threshold: 0.5 // Trigger when 50% of the video is visible
+        threshold: 0.25,      // a quarter of the video is enough to count as "watching"
+        rootMargin: '200px'   // start fetching just before it reaches the viewport
     });
-    
-    carouselVideos.forEach(video => {
+
+    videos.forEach(video => {
+        video.loop = true;
+        video.muted = true;   // required for autoplay to be permitted at all
+        video.playsInline = true;
         observer.observe(video);
     });
 }
 
-$(document).ready(function() {
-    // Check for click events on the navbar burger icon
+// Start the videos on their own, not from inside the jQuery block below. That block depends
+// on jQuery (a CDN script) and on bulmaCarousel, and if either is missing it throws before it
+// reaches the videos -- which is exactly how autoplay silently stopped working.
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupVideoAutoplay);
+} else {
+    setupVideoAutoplay();
+}
 
-    var options = {
-		slidesToScroll: 1,
-		slidesToShow: 1,
-		loop: true,
-		infinite: true,
-		autoplay: true,
-		autoplaySpeed: 5000,
-    }
+// Carousel and slider are template leftovers: this page has no .carousel or .slider element.
+// Keep them, but never let them take the rest of the script down with them.
+if (typeof $ !== 'undefined') {
+    $(document).ready(function() {
+        var options = {
+            slidesToScroll: 1,
+            slidesToShow: 1,
+            loop: true,
+            infinite: true,
+            autoplay: true,
+            autoplaySpeed: 5000,
+        };
 
-	// Initialize all div with carousel class
-    var carousels = bulmaCarousel.attach('.carousel', options);
-	
-    bulmaSlider.attach();
-    
-    // Setup video autoplay for carousel
-    setupVideoCarouselAutoplay();
-
-})
+        try {
+            if (typeof bulmaCarousel !== 'undefined') bulmaCarousel.attach('.carousel', options);
+            if (typeof bulmaSlider !== 'undefined') bulmaSlider.attach();
+        } catch (e) {
+            console.warn('carousel/slider init skipped:', e);
+        }
+    });
+}
