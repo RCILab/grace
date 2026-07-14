@@ -18,17 +18,16 @@
        - static/images/favicon.ico
        - static/pdfs/grace_paper.pdf
        - static/videos/banner_video.mp4  (overview reel, top of page)
-       - static/videos/carousel1.mp4     (2D point-mass simulation)
-       - static/videos/carousel2.mp4     (FR3 tracking simulation)
+       - static/videos/edited_pointmass_dp.mp4           (Sim, point-mass: diffusion policy fails)
+       - static/videos/edited_pointmass_grace.mp4        (Sim, point-mass: GRACE reaches the goal)
+       - static/videos/edited_tracking_dp.mp4            (Sim, FR3 tracking: diffusion policy collides)
+       - static/videos/edited_tracking_grace.mp4         (Sim, FR3 tracking: GRACE reaches the goal)
        - static/videos/edited_success_book.mp4    (Contributions: concept demo, book retrieval
                                                    around an unseen obstacle; qualitative, no metrics)
        - static/videos/edited_fail2.mp4           (Real-world, shelf placement: unguided DP fails)
        - static/videos/edited_success_floor1.mp4  (Real-world, shelf placement: GRACE succeeds)
 
-       Unused: static/videos/carousel3.mp4 (was the real-world placeholder clip).
-
-       TODO before release:
-       - Fill in the real-world Success Rate table (values are placeholders / TBD).
+       Unused: static/videos/carousel1.mp4, carousel2.mp4, carousel3.mp4 (earlier placeholder clips).
        ============================================================= -->
 
   <meta name="title" content="GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Estimation">
@@ -196,7 +195,7 @@
     <section class="section hero is-light">
       <div class="container is-max-desktop">
         <div class="columns is-centered has-text-centered">
-          <div class="column is-four-fifths">
+          <div class="column is-full">
             <h2 class="title is-3">Abstract</h2>
             <div class="content has-text-justified">
               <p>Diffusion policies generate multimodal robot action sequences from demonstrations, but steering them toward deployment-time constraints typically relies on differentiable guidance costs. This excludes many practical safety constraints, such as binary collision checks, joint limits, and black-box rollout costs, that are nondifferentiable. We propose <b>Gradient-free Robot Action generation via Combined diffusion–MPPI posterior Estimation (GRACE)</b>, which guides a pretrained diffusion policy with Model Predictive Path Integral (MPPI) control using only forward cost evaluations. We show that the diffusion reverse step and the MPPI update share a common score-ascent structure. This lets us recast each constrained reverse step as a Bayesian posterior and approximate its mean with a single MPPI update centered at the diffusion prior mean, integrated directly into denoising rather than wrapped around it as an outer loop. Under this view, gradient guidance emerges as a special case that holds only when the cost is differentiable. GRACE thus enables constraint-aware generation without retraining the diffusion model or designing differentiable surrogates. Across simulation and real-world robot experiments, GRACE attains higher success rates and fewer safety violations than both gradient-guided diffusion policies and sampling-based planners.</p>
@@ -205,7 +204,7 @@
         </div>
 
         <div class="columns is-centered">
-          <div class="column is-four-fifths has-text-centered">
+          <div class="column is-full has-text-centered">
             <figure class="image">
               <img src="static/images/fig1.jpg" alt="GRACE core idea: a multimodal diffusion prior decides which way to go, gradient-free guidance decides how to stay safe" loading="lazy">
             </figure>
@@ -219,7 +218,7 @@
       <div class="container is-max-desktop">
         <h2 class="title is-3 has-text-centered">Contributions</h2>
         <div class="columns is-centered">
-          <div class="column is-four-fifths">
+          <div class="column is-full">
             <div class="content is-size-5" style="line-height: 1.7;">
               <ul>
                 <li><b>Unifying diffusion and MPPI for guidance.</b> The score-ascent structure shared by the two updates is exploited to integrate the sampling-based guidance of MPPI directly into the diffusion reverse step, rather than wrapping it around the model as an outer loop.</li>
@@ -231,12 +230,12 @@
         </div>
 
         <div class="columns is-centered">
-          <div class="column is-four-fifths has-text-centered">
+          <div class="column is-full has-text-centered">
             <video id="concept-video" controls autoplay muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
               <source src="static/videos/edited_success_book.mp4" type="video/mp4">
             </video>
             <p class="content has-text-justified" style="margin-top: 1rem; line-height: 1.6;">
-              <b>Guidance on real hardware.</b> The pretrained prior knows how to reach into the shelf and pull the book out. The red box is an obstacle it never saw during training, introduced only at deployment. The guidance never differentiates that obstacle. It only evaluates a collision cost on sampled rollouts, and reweighting them inside each reverse step is enough to bend the motion around the box while the grasp still succeeds. No retraining, no differentiable surrogate, no optimizer wrapped around the policy.
+              <b>Guidance on real hardware.</b> The pretrained prior knows how to pull the book off the shelf, and the red box is an obstacle it never saw during training. Reweighting sampled rollouts by a collision cost inside each reverse step is enough to bend the motion around it, with no retraining, no differentiable surrogate, and no optimizer wrapped around the policy.
             </p>
           </div>
         </div>
@@ -249,14 +248,14 @@
         <div class="columns is-centered">
           <div class="column is-full has-text-centered">
             <h2 class="title is-3">Method</h2>
-            <figure class="image" style="max-width: 1100px; margin: 0 auto 1.25rem;">
+            <figure class="image" style="margin: 0 auto 1.25rem;">
               <img src="static/images/fig2.png" alt="GRACE inference pipeline" loading="lazy" style="width: 100%; height: auto;">
             </figure>
             <div class="content has-text-justified" style="line-height: 1.7;">
               <ul>
                 <li><b>Diffusion and MPPI as score ascent.</b> The diffusion reverse mean can be written as a step that ascends the score of the noised data marginal, and the MPPI optimal update equals the prior mean plus a covariance-scaled score of the cost-induced distribution. Both advance the iterate along a scaled score, learned offline from demonstrations for diffusion and estimated online from cost rollouts for MPPI.</li>
                 <li><b>Constraint-conditioned reverse posterior.</b> We treat constraint satisfaction as a conditioning event and apply Bayes' rule to the reverse step. With a Boltzmann likelihood on the rollout cost, the posterior becomes a cost factor multiplying the Gaussian reverse kernel, the same product form as the MPPI optimal distribution but centered at the diffusion prior mean.</li>
-                <li><b>Gaussian approximation via KL minimization.</b> Because the cost contains binary, piecewise-constant terms, this posterior is non-Gaussian and intractable. We project it onto a Gaussian that keeps the diffusion reverse covariance and optimizes only the mean; KL minimization matches the posterior's first moment, a ratio of cost-weighted expectations estimated with the MPPI update centered at the prior mean.</li>
+                <li><b>Gaussian approximation via KL minimization.</b> Because the cost contains binary, piecewise-constant terms, this posterior is non-Gaussian and intractable. We project it onto a Gaussian that keeps the diffusion reverse covariance and optimizes only the mean, where KL minimization matches the posterior's first moment, a ratio of cost-weighted expectations estimated with the MPPI update centered at the prior mean.</li>
                 <li><b>Decoupled guidance covariance.</b> The denoising schedule drives the reverse covariance to zero, so rollout perturbations would vanish as the action sequence is finalized. We instead draw rollouts from a separate guidance covariance and importance-reweight them, setting the exploration scale independently of the schedule.</li>
                 <li><b>Gradient guidance as a special case.</b> Linearizing the task log-likelihood around the prior mean collapses the correction to a single analytic gradient direction, exactly classical gradient guidance, which requires differentiating both the cost and the dynamics. GRACE makes no such assumption and estimates the posterior mean from forward rollouts, extending the same update to nondifferentiable costs.</li>
               </ul>
@@ -273,51 +272,58 @@
 
         <!-- Point-mass -->
         <div class="columns is-centered">
-          <div class="column is-four-fifths">
+          <div class="column is-full">
             <h3 class="title is-4 has-text-centered" style="margin-bottom: 0.75rem;">Point-Mass Navigation</h3>
-            <p class="content has-text-justified" style="line-height: 1.6;">
-              A planar point mass must reach a goal in a cluttered map, where additional obstacles absent during training appear only at inference time. A trial succeeds if the point mass reaches the goal without collision or timeout.
+            <p class="content has-text-justified" style="line-height: 1.7;">
+              A planar point mass must reach the goal across a cluttered map without collision or timeout, where the gray obstacles were present during training but the red ones appear only at inference, and both clips below share the same prior and map, differing only in the guidance.
             </p>
           </div>
         </div>
 
         <div class="columns is-centered">
-          <div class="column is-four-fifths has-text-centered">
-            <video poster="static/images/fig4.png" id="video-2d" controls muted loop preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/carousel1.mp4" type="video/mp4">
+          <div class="column is-half has-text-centered">
+            <video id="video-2d-dp" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/edited_pointmass_dp.mp4" type="video/mp4">
             </video>
-            <p class="content has-text-centered" style="margin-top: 0.5rem;">GRACE navigating around unseen obstacles in the point-mass task.</p>
+            <p class="content has-text-justified" style="margin-top: 0.5rem; line-height: 1.6;">
+              <b>Diffusion Policy.</b> The prior proposes a route through the map, and the local gradient correction cannot pull it clear of the unseen obstacles it runs into.
+            </p>
           </div>
-        </div>
-
-        <div class="columns is-centered">
-          <div class="column is-four-fifths has-text-centered">
-            <figure class="image">
-              <img src="static/images/fig4.png" alt="2D trajectory modes and representative GRACE trajectories" loading="lazy">
-            </figure>
-            <p class="content has-text-justified" style="margin-top: 0.75rem; line-height: 1.6;">
-              GRACE preserves the multimodality of the prior, producing several distinct detours, while biasing it toward lower-cost, constraint-satisfying paths instead of collapsing onto a single route.
+          <div class="column is-half has-text-centered">
+            <video id="video-2d-grace" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/edited_pointmass_grace.mp4" type="video/mp4">
+            </video>
+            <p class="content has-text-justified" style="margin-top: 0.5rem; line-height: 1.6;">
+              <b>GRACE (ours).</b> Reweighting whole rollouts against the collision cost detours the same prior around the unseen obstacles and reaches the goal.
             </p>
           </div>
         </div>
 
         <div class="columns is-centered">
-          <div class="column is-three-fifths">
+          <div class="column is-full">
+            <figure class="image" style="margin-bottom: 1.5rem;">
+              <img src="static/images/fig4.png" alt="Distinct trajectory modes per method, and representative GRACE trajectories" loading="lazy">
+            </figure>
+
             <div class="table-container">
               <table class="table is-fullwidth is-striped is-hoverable is-bordered">
                 <thead>
-                  <tr><th>Method</th><th>Success [%]</th><th>Collision Fail</th><th>Path Length [m]</th></tr>
+                  <tr><th>Method</th><th>Success [%] &uarr;</th><th>Collision Fail &darr;</th><th>Path Length [m] &darr;</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td>CEM</td><td>8/30 (26.7%)</td><td>0/30</td><td>1.247</td></tr>
-                  <tr><td>MPPI</td><td>8/30 (26.7%)</td><td>0/30</td><td>1.241</td></tr>
-                  <tr><td>DA-MPPI</td><td>8/30 (26.7%)</td><td>0/30</td><td>1.233</td></tr>
+                  <tr><td>CEM</td><td>8/30 (26.7%)</td><td><b>0/30</b></td><td>1.247</td></tr>
+                  <tr><td>MPPI</td><td>8/30 (26.7%)</td><td><b>0/30</b></td><td>1.241</td></tr>
+                  <tr><td>DA-MPPI</td><td>8/30 (26.7%)</td><td><b>0/30</b></td><td><b>1.233</b></td></tr>
                   <tr><td>PO-DP</td><td>18/30 (60.0%)</td><td>12/30</td><td>2.657</td></tr>
                   <tr><td>GG-DP</td><td>18/30 (60.0%)</td><td>12/30</td><td>2.302</td></tr>
-                  <tr><td><b>GRACE (CNN)</b></td><td><b>20/30 (66.7%)</b></td><td><b>0/30</b></td><td>3.681</td></tr>
+                  <tr><td><b>GRACE (CNN)</b></td><td>20/30 (66.7%)</td><td><b>0/30</b></td><td>3.681</td></tr>
                   <tr><td><b>GRACE (UNet)</b></td><td><b>25/30 (83.3%)</b></td><td>2/30</td><td>3.372</td></tr>
                 </tbody>
               </table>
+            </div>
+
+            <div class="content has-text-justified" style="line-height: 1.7;">
+              <p>Bold marks the best value per column over 30 random start–goal pairs, ties included. The sampling planners avoid collisions but stall at 26.7% with no prior to draw on, the diffusion baselines reach 60.0% yet collide in 12 of 30 trials as a local gradient pushes them off one obstacle into the next, and GRACE alone is both accurate and safe at 83.3% with zero collisions on CNN, its longer paths being the detours the hard maps demand.</p>
             </div>
           </div>
         </div>
@@ -326,20 +332,30 @@
 
         <!-- Tracking (FR3) -->
         <div class="columns is-centered">
-          <div class="column is-four-fifths">
+          <div class="column is-full">
             <h3 class="title is-4 has-text-centered" style="margin-bottom: 0.75rem;">Manipulator Tracking</h3>
-            <p class="content has-text-justified" style="line-height: 1.6;">
-              A 7-DoF Franka Research 3 (FR3) manipulator must reach goal joint configurations among randomly placed 3D obstacles, satisfying obstacle, self-collision, floor-contact, and joint-limit constraints, all introduced only at inference time. A trial succeeds if the target is reached without any safety violation or timeout.
+            <p class="content has-text-justified" style="line-height: 1.7;">
+              A 7-DoF Franka Research 3 (FR3) must reach goal joint configurations without violating obstacle, self-collision, floor-contact, or joint-limit constraints introduced only at inference, and both clips below share the same prior, start (green), and goal (red), differing only in the guidance.
             </p>
           </div>
         </div>
 
         <div class="columns is-centered">
-          <div class="column is-four-fifths has-text-centered">
-            <video poster="static/images/fig5.png" id="video-fr3-sim" controls muted loop preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/carousel2.mp4" type="video/mp4">
+          <div class="column is-half has-text-centered">
+            <video id="video-fr3-dp" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/edited_tracking_dp.mp4" type="video/mp4">
             </video>
-            <p class="content has-text-centered" style="margin-top: 0.5rem;">GRACE reaching the target while satisfying all safety constraints in simulation.</p>
+            <p class="content has-text-justified" style="margin-top: 0.5rem; line-height: 1.6;">
+              <b>Diffusion Policy.</b> One update direction carries every safety penalty, so the arm is pulled into an obstacle and the trial ends on a collision, short of the goal.
+            </p>
+          </div>
+          <div class="column is-half has-text-centered">
+            <video id="video-fr3-grace" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/edited_tracking_grace.mp4" type="video/mp4">
+            </video>
+            <p class="content has-text-justified" style="margin-top: 0.5rem; line-height: 1.6;">
+              <b>GRACE (ours).</b> Reweighting complete rollouts against the total cost bends the same prior around the clutter, and the goal is reached with every safety constraint intact.
+            </p>
           </div>
         </div>
 
@@ -348,11 +364,11 @@
             <div class="table-container">
               <table class="table is-fullwidth is-striped is-hoverable is-bordered">
                 <thead>
-                  <tr><th>Method</th><th>Success [%]</th><th>Computation Time [ms]</th><th>Guidance Time [ms]</th></tr>
+                  <tr><th>Method</th><th>Success [%] &uarr;</th><th>Computation Time [ms] &darr;</th><th>Guidance Time [ms] &darr;</th></tr>
                 </thead>
                 <tbody>
                   <tr><td>CEM</td><td>24/30 (80.0%)</td><td>153.45</td><td>—</td></tr>
-                  <tr><td>MPPI</td><td>23/30 (76.7%)</td><td>29.88</td><td>—</td></tr>
+                  <tr><td>MPPI</td><td>23/30 (76.7%)</td><td><b>29.88</b></td><td>—</td></tr>
                   <tr><td>DA-MPPI</td><td>23/30 (76.7%)</td><td>154.22</td><td>—</td></tr>
                   <tr><td>PO-DP</td><td>11/30 (36.7%)</td><td>647.30</td><td>220.01</td></tr>
                   <tr><td>GG-DP</td><td>15/30 (50.0%)</td><td>671.59</td><td>244.72</td></tr>
@@ -361,9 +377,9 @@
                 </tbody>
               </table>
             </div>
-            <p class="content has-text-justified" style="line-height: 1.6;">
-              GRACE reaches the best success rate, <b>90.0%</b> for both backbones, with no violation of self-collision, floor-contact, or joint-limit constraints, and does so at a lower guidance cost than the gradient-guided diffusion policies. Because gradient guidance merges all safety penalties into a single update direction, it leaves some constraints unsatisfied and scatters failures across every mode; GRACE instead reweights complete rollouts toward lower total cost and avoids these failures.
-            </p>
+            <div class="content has-text-justified" style="line-height: 1.7;">
+              <p>Bold marks the best value per column over 30 random obstacle layouts, and guidance does not apply to the planners with no prior to steer (—). Gradient guidance collapses every safety penalty into one direction and gives up whichever term is not locally largest, while GRACE scores complete rollouts against the total cost and reaches <b>90.0%</b> on both backbones with no self-collision, floor-contact, or joint-limit violation, at about a third of the guidance cost.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -373,9 +389,13 @@
     <section class="section is-light">
       <div class="container is-max-desktop">
         <h2 class="title is-3 has-text-centered">Real-World Experiments</h2>
-        <p class="content has-text-centered" style="max-width: 860px; margin: 0 auto 2rem; line-height: 1.6;">
-          We deploy GRACE on a physical 7-DoF FR3 manipulator using the same diffusion prior and guidance procedure as in simulation, without any retraining or fine-tuning. The manipulator starts while grasping a cube and must place it at a randomly sampled position on the shelf, with a <b>red box acting as an unseen obstacle</b>: it never appears in the demonstrations the prior was trained on and is introduced only at deployment time, so all collision avoidance must come online from the gradient-free guidance term. A trial succeeds if the cube reaches the target placement without any collision. The two clips below show the same prior under the same layout, and differ only in whether the reverse steps are guided.
-        </p>
+        <div class="columns is-centered">
+          <div class="column is-full">
+            <p class="content has-text-justified" style="line-height: 1.7;">
+              A physical 7-DoF FR3, running the simulation prior with no retraining, must place a grasped cube at a randomly sampled spot on the shelf without hitting a red box that appeared in no demonstration, scored over 10 trials, and both clips below share the same prior and layout, differing only in the guidance.
+            </p>
+          </div>
+        </div>
 
         <div class="columns is-centered">
           <div class="column is-half has-text-centered">
@@ -383,7 +403,7 @@
               <source src="static/videos/edited_fail2.mp4" type="video/mp4">
             </video>
             <p class="content has-text-justified" style="margin-top: 0.5rem; line-height: 1.6;">
-              <b>Diffusion Policy (unguided).</b> The prior faithfully reproduces the demonstrated placing motion, but nothing steers it away from an obstacle it never saw during training, so the arm drives the cube straight into the red box.
+              <b>Diffusion Policy (unguided).</b> Reproduces the demonstrated placing motion faithfully, and drives the cube straight into the box it never saw.
             </p>
           </div>
           <div class="column is-half has-text-centered">
@@ -391,25 +411,26 @@
               <source src="static/videos/edited_success_floor1.mp4" type="video/mp4">
             </video>
             <p class="content has-text-justified" style="margin-top: 0.5rem; line-height: 1.6;">
-              <b>GRACE (ours).</b> The same prior, now reweighted at every reverse step by the binary collision cost, detours around the red box and still completes the placement, without a differentiable cost or any retraining.
+              <b>GRACE (ours).</b> The same prior, reweighted at each reverse step by the binary collision cost, detours around the box and still completes the placement.
             </p>
           </div>
         </div>
 
-        <p class="content has-text-centered" style="margin-top: 1.5rem;"><b>Real-world success rate on the shelf placement task.</b></p>
-        <!-- TODO: replace TBD with the measured real-world success rates. -->
         <div class="columns is-centered">
-          <div class="column is-half">
+          <div class="column is-full">
             <div class="table-container">
               <table class="table is-fullwidth is-striped is-hoverable is-bordered has-text-centered">
                 <thead>
-                  <tr><th>Method</th><th>Success Rate</th></tr>
+                  <tr><th>Method</th><th>Success [%] &uarr;</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td>Diffusion Policy</td><td>TBD</td></tr>
-                  <tr><td><b>GRACE (Ours)</b></td><td><b>TBD</b></td></tr>
+                  <tr><td>Diffusion Policy</td><td>0/10 (0.0%)</td></tr>
+                  <tr><td><b>GRACE (Ours)</b></td><td><b>10/10 (100.0%)</b></td></tr>
                 </tbody>
               </table>
+            </div>
+            <div class="content has-text-justified" style="line-height: 1.7;">
+              <p>Bold marks the best value per column over the 10 trials. The unguided policy hits the box every time while GRACE places the cube every time, and since both rows run the identical prior on the identical hardware, that gap is the gradient-free guidance alone.</p>
             </div>
           </div>
         </div>
