@@ -20,12 +20,14 @@
        - static/videos/banner_video.mp4  (overview reel, top of page)
        - static/videos/carousel1.mp4     (2D point-mass simulation)
        - static/videos/carousel2.mp4     (FR3 tracking simulation)
-       - static/videos/carousel3.mp4     (FR3 real-world, video #1)
+       - static/videos/edited_success_book.mp4    (Contributions: concept demo, book retrieval
+                                                   around an unseen obstacle; qualitative, no metrics)
+       - static/videos/edited_fail2.mp4           (Real-world, shelf placement: unguided DP fails)
+       - static/videos/edited_success_floor1.mp4  (Real-world, shelf placement: GRACE succeeds)
 
-       ASSETS TO ADD before release (no poster; show a blank frame until added):
-       - static/videos/denoising_tracking.mp4  (Contributions: per-step evolution of
-                                                 prior mean / MPPI samples / posterior mean / next iterate)
-       - static/videos/real_world_2.mp4        (Real-World Experiments: second clip)
+       Unused: static/videos/carousel3.mp4 (was the real-world placeholder clip).
+
+       TODO before release:
        - Fill in the real-world Success Rate table (values are placeholders / TBD).
        ============================================================= -->
 
@@ -230,11 +232,11 @@
 
         <div class="columns is-centered">
           <div class="column is-four-fifths has-text-centered">
-            <video id="denoising-video" controls autoplay muted loop preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/denoising_tracking.mp4" type="video/mp4">
+            <video id="concept-video" controls autoplay muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/edited_success_book.mp4" type="video/mp4">
             </video>
             <p class="content has-text-justified" style="margin-top: 1rem; line-height: 1.6;">
-              <b>Guided denoising in action.</b> For a tracking rollout, we visualize how a single action sequence is refined over the reverse-diffusion process. At every denoising step, and for every action along the horizon, the video shows the <b>diffusion prior mean</b> proposed by the pretrained policy, the <b>MPPI rollout samples</b> drawn around it, the <b>gradient-free posterior mean</b> obtained by reweighting those samples with the constraint cost, and the <b>sampled next iterate</b> passed to the following step. The prior decides the overall route while the posterior correction bends it away from constraint violations, all without differentiating the cost.
+              <b>Guidance on real hardware.</b> The pretrained prior knows how to reach into the shelf and pull the book out. The red box is an obstacle it never saw during training, introduced only at deployment. The guidance never differentiates that obstacle. It only evaluates a collision cost on sampled rollouts, and reweighting them inside each reverse step is enough to bend the motion around the box while the grasp still succeeds. No retraining, no differentiable surrogate, no optimizer wrapped around the policy.
             </p>
           </div>
         </div>
@@ -371,26 +373,30 @@
     <section class="section is-light">
       <div class="container is-max-desktop">
         <h2 class="title is-3 has-text-centered">Real-World Experiments</h2>
-        <p class="content has-text-centered" style="max-width: 820px; margin: 0 auto 1.5rem;">
-          We deploy GRACE on a physical 7-DoF FR3 manipulator using the same diffusion prior and guidance procedure as in simulation, without any retraining or fine-tuning. Obstacles are placed in the workspace and all collision avoidance is supplied online through the gradient-free guidance term.
+        <p class="content has-text-centered" style="max-width: 860px; margin: 0 auto 2rem; line-height: 1.6;">
+          We deploy GRACE on a physical 7-DoF FR3 manipulator using the same diffusion prior and guidance procedure as in simulation, without any retraining or fine-tuning. The manipulator starts while grasping a cube and must place it at a randomly sampled position on the shelf, with a <b>red box acting as an unseen obstacle</b>: it never appears in the demonstrations the prior was trained on and is introduced only at deployment time, so all collision avoidance must come online from the gradient-free guidance term. A trial succeeds if the cube reaches the target placement without any collision. The two clips below show the same prior under the same layout, and differ only in whether the reverse steps are guided.
         </p>
 
         <div class="columns is-centered">
           <div class="column is-half has-text-centered">
-            <video poster="static/images/fig5.png" id="video-real-1" controls muted loop preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/carousel3.mp4" type="video/mp4">
+            <video id="video-real-fail" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/edited_fail2.mp4" type="video/mp4">
             </video>
-            <p class="content has-text-centered" style="margin-top: 0.5rem;">Real-world deployment, scenario 1.</p>
+            <p class="content has-text-justified" style="margin-top: 0.5rem; line-height: 1.6;">
+              <b>Diffusion Policy (unguided).</b> The prior faithfully reproduces the demonstrated placing motion, but nothing steers it away from an obstacle it never saw during training, so the arm drives the cube straight into the red box.
+            </p>
           </div>
           <div class="column is-half has-text-centered">
-            <video poster="static/images/fig5.png" id="video-real-2" controls muted loop preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/real_world_2.mp4" type="video/mp4">
+            <video id="video-real-success" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/edited_success_floor1.mp4" type="video/mp4">
             </video>
-            <p class="content has-text-centered" style="margin-top: 0.5rem;">Real-world deployment, scenario 2.</p>
+            <p class="content has-text-justified" style="margin-top: 0.5rem; line-height: 1.6;">
+              <b>GRACE (ours).</b> The same prior, now reweighted at every reverse step by the binary collision cost, detours around the red box and still completes the placement, without a differentiable cost or any retraining.
+            </p>
           </div>
         </div>
 
-        <p class="content has-text-centered"><b>Real-world success rate: GRACE vs. a standard diffusion policy.</b></p>
+        <p class="content has-text-centered" style="margin-top: 1.5rem;"><b>Real-world success rate on the shelf placement task.</b></p>
         <!-- TODO: replace TBD with the measured real-world success rates. -->
         <div class="columns is-centered">
           <div class="column is-half">
