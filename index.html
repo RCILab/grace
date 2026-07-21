@@ -563,7 +563,6 @@
               <tr><td>Elite fraction</td><td>0.1</td></tr>
               <tr><td>Initial sampling std</td><td>1.0</td></tr>
               <tr><td>Minimum sampling std</td><td>0</td></tr>
-              <tr><td>Reset std at each replan</td><td>Enabled</td></tr>
             </tbody>
           </table>
         </div>
@@ -590,8 +589,6 @@
               <tr><td>Initial sampling std</td><td>1.0</td></tr>
               <tr><td>Minimum sampling std</td><td>0</td></tr>
               <tr><td>Inter-iteration std decay</td><td>0.5</td></tr>
-              <tr><td>Horizon-wise std decay</td><td>0.95</td></tr>
-              <tr><td>Horizon decay scale</td><td>4.0</td></tr>
             </tbody>
           </table>
         </div>
@@ -607,12 +604,11 @@
                 <th>Backbone</th>
                 <th>Guidance stage</th>
                 <th>Gradient updates</th>
-                <th>Gradient step size</th>
               </tr>
             </thead>
             <tbody>
-              <tr><td><b>PO-DP</b></td><td>UNet</td><td>After denoising</td><td>25</td><td>0.05</td></tr>
-              <tr><td><b>GG-DP</b></td><td>UNet</td><td>Final 5 denoising steps</td><td>5 per guided step</td><td>0.05</td></tr>
+              <tr><td><b>PO-DP</b></td><td>UNet</td><td>After denoising</td><td>25</td></tr>
+              <tr><td><b>GG-DP</b></td><td>UNet</td><td>Final 5 denoising steps</td><td>5 per guided step</td></tr>
             </tbody>
           </table>
         </div>
@@ -643,7 +639,7 @@
             </thead>
             <tbody>
               <tr><td><b>GRACE-CNN</b></td><td>CNN</td><td>Final 5 steps</td><td>1,000</td><td>0.3</td></tr>
-              <tr><td><b>GRACE-UNet</b></td><td>UNet</td><td>Final 5 steps</td><td>1,000</td><td>0.2</td></tr>
+              <tr><td><b>GRACE-UNet</b></td><td>UNet</td><td>Final 5 steps</td><td>1,000</td><td>0.3</td></tr>
             </tbody>
           </table>
         </div>
@@ -701,7 +697,6 @@
               <tr><td>Initial sampling std</td><td>0.03 rad</td></tr>
               <tr><td>Minimum sampling std</td><td>0</td></tr>
               <tr><td>Inter-iteration std decay</td><td>0.5</td></tr>
-              <tr><td>Horizon-wise std decay</td><td>1.0</td></tr>
             </tbody>
           </table>
         </div>
@@ -717,12 +712,11 @@
                 <th>Backbone</th>
                 <th>Guidance stage</th>
                 <th>Gradient updates</th>
-                <th>Gradient step size</th>
               </tr>
             </thead>
             <tbody>
-              <tr><td><b>PO-DP</b></td><td>UNet</td><td>After denoising</td><td>15</td><td>1.0</td></tr>
-              <tr><td><b>GG-DP</b></td><td>UNet</td><td>Final 3 denoising steps</td><td>5 per guided step</td><td>1.0</td></tr>
+              <tr><td><b>PO-DP</b></td><td>UNet</td><td>After denoising</td><td>15</td></tr>
+              <tr><td><b>GG-DP</b></td><td>UNet</td><td>Final 3 denoising steps</td><td>5 per guided step</td></tr>
             </tbody>
           </table>
         </div>
