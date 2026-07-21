@@ -13,8 +13,7 @@
        Assets present in static/:
        - static/images/fig1.png          (core idea, shown with the abstract)
        - static/images/fig2.png          (method / inference pipeline)
-       - static/images/fig4a.png         (number of trajectory modes)
-       - static/images/fig4b.png         (representative GRACE trajectories)
+       - static/images/fig4.png          (2D multimodality evaluation)
        - static/images/fig5.png          (FR3 execution snapshots)
        - static/images/favicon.ico
        - static/pdfs/grace_paper.pdf
@@ -303,24 +302,12 @@
 
         <div class="columns is-centered">
           <div class="column is-full">
-            <div class="columns is-centered is-vcentered" style="margin-bottom: 1.5rem;">
-              <div class="column is-half has-text-centered">
-                <figure style="height: 100%; display: flex; flex-direction: column;">
-                  <div style="height: clamp(220px, 32vw, 340px); display: flex; align-items: center; justify-content: center; overflow: hidden;">
-                    <img src="static/images/fig4a.png" alt="Number of distinct trajectory modes produced by each planning method" loading="lazy" style="width: 100%; height: 100%; object-fit: contain; object-position: center;">
-                  </div>
-                  <figcaption class="content is-size-7" style="margin-top: 0.5rem;"><b>(a)</b> Number of distinct trajectory modes produced by each method.</figcaption>
-                </figure>
-              </div>
-              <div class="column is-half has-text-centered">
-                <figure style="height: 100%; display: flex; flex-direction: column;">
-                  <div style="height: clamp(220px, 32vw, 340px); display: flex; align-items: center; justify-content: center; overflow: hidden;">
-                    <img src="static/images/fig4b.png" alt="Representative trajectories for the three modes produced by GRACE UNet" loading="lazy" style="width: 100%; height: 100%; object-fit: contain; object-position: center;">
-                  </div>
-                  <figcaption class="content is-size-7" style="margin-top: 0.5rem;"><b>(b)</b> Representative trajectories of the three modes produced by GRACE (UNet).</figcaption>
-                </figure>
-              </div>
-            </div>
+            <figure class="image has-text-centered" style="margin-bottom: 1.5rem;">
+              <img src="static/images/fig4.png" alt="Multimodality evaluation showing the number of trajectory modes produced by each method and representative GRACE UNet trajectories" loading="lazy" style="width: 100%; height: auto;">
+              <figcaption class="content is-size-7" style="margin-top: 0.5rem;">
+                <b>Multimodality evaluation.</b> (a) Number of distinct trajectory modes produced by each method. (b) Representative trajectories of the three modes produced by GRACE (UNet).
+              </figcaption>
+            </figure>
 
             <div class="table-container">
               <table class="table is-fullwidth is-striped is-hoverable is-bordered">
