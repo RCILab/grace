@@ -13,7 +13,8 @@
        Assets present in static/:
        - static/images/fig1.png          (core idea, shown with the abstract)
        - static/images/fig2.png          (method / inference pipeline)
-       - static/images/fig4.png          (2D mode diversity + trajectories)
+       - static/images/fig4a.png         (number of trajectory modes)
+       - static/images/fig4b.png         (representative GRACE trajectories)
        - static/images/fig5.png          (FR3 execution snapshots)
        - static/images/favicon.ico
        - static/pdfs/grace_paper.pdf
@@ -30,7 +31,7 @@
        Unused: static/videos/carousel1.mp4, carousel2.mp4, carousel3.mp4 (earlier placeholder clips).
        ============================================================= -->
 
-  <meta name="title" content="GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Estimation">
+  <meta name="title" content="GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Mean Estimation">
   <meta name="description" content="GRACE guides diffusion policies with MPPI using only forward cost evaluations, enabling constraint-aware robot action generation without gradients, retraining, or differentiable costs.">
   <meta name="keywords" content="diffusion models, model predictive path integral control, motion planning, posterior sampling, gradient-free optimization, robot action generation, constraint-aware planning">
   <meta name="author" content="Anonymous Authors">
@@ -39,7 +40,7 @@
 
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="Anonymous Submission">
-  <meta property="og:title" content="GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Estimation">
+  <meta property="og:title" content="GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Mean Estimation">
   <meta property="og:description" content="GRACE combines a multimodal diffusion prior with MPPI-based gradient-free guidance for constraint-aware robot action generation.">
   <meta property="og:url" content="https://anonymous.4open.science/w/grace-70BB/">
   <meta property="og:image" content="https://anonymous.4open.science/w/grace-70BB/static/images/fig1.png">
@@ -53,12 +54,12 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@anonymous">
   <meta name="twitter:creator" content="@anonymous">
-  <meta name="twitter:title" content="GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Estimation">
+  <meta name="twitter:title" content="GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Mean Estimation">
   <meta name="twitter:description" content="Constraint-aware diffusion planning with gradient-free MPPI guidance.">
   <meta name="twitter:image" content="https://anonymous.4open.science/w/grace-70BB/static/images/fig1.png">
   <meta name="twitter:image:alt" content="GRACE project page preview">
 
-  <meta name="citation_title" content="GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Estimation">
+  <meta name="citation_title" content="GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Mean Estimation">
   <meta name="citation_author" content="Anonymous, Authors">
   <meta name="citation_publication_date" content="2026">
   <meta name="citation_journal_title" content="IEEE Robotics and Automation Letters (RA-L)">
@@ -75,7 +76,7 @@
   <link rel="preconnect" href="https://documentcloud.adobe.com">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
 
-  <title>GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Estimation | Project Page</title>
+  <title>GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Mean Estimation | Project Page</title>
 
   <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
   <link rel="apple-touch-icon" href="static/images/favicon.ico">
@@ -107,7 +108,7 @@
   {
     "@context": "https://schema.org",
     "@type": "ScholarlyArticle",
-    "headline": "GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Estimation",
+    "headline": "GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Mean Estimation",
     "description": "GRACE guides diffusion policies with MPPI using only forward cost evaluations, enabling constraint-aware robot action generation without gradients, retraining, or differentiable costs.",
     "author": [{"@type": "Person", "name": "Anonymous Authors"}],
     "datePublished": "2026-01-01",
@@ -115,8 +116,8 @@
     "url": "https://anonymous.4open.science/w/grace-70BB/",
     "image": "https://anonymous.4open.science/w/grace-70BB/static/images/fig1.png",
     "keywords": ["diffusion models", "model predictive path integral control", "motion planning", "posterior sampling", "gradient-free optimization"],
-    "abstract": "Diffusion policies generate multimodal robot action sequences from demonstrations, but steering them toward deployment-time constraints typically relies on differentiable guidance costs. This excludes many practical safety constraints, such as binary collision checks, joint limits, and black-box rollout costs, that are nondifferentiable. We propose Gradient-free Robot Action generation via Combined diffusion–MPPI posterior Estimation (GRACE), which guides a pretrained diffusion policy with Model Predictive Path Integral (MPPI) control using only forward cost evaluations. We show that the diffusion reverse step and the MPPI update share a common score-ascent structure. This lets us recast each constrained reverse step as a Bayesian posterior and approximate its mean with a single MPPI update centered at the diffusion prior mean, integrated directly into denoising rather than wrapped around it as an outer loop. Under this view, gradient guidance emerges as a special case that holds only when the cost is differentiable. GRACE thus enables constraint-aware generation without retraining the diffusion model or designing differentiable surrogates. Across simulation and real-world robot experiments, GRACE attains higher success rates and fewer safety violations than both gradient-guided diffusion policies and sampling-based planners.",
-    "citation": "@article{anonymous2026grace, title={GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Estimation}, author={Anonymous Authors}, journal={IEEE Robotics and Automation Letters (RA-L)}, note={Submitted}, year={2026}}",
+    "abstract": "Diffusion policies generate multimodal robot action sequences from demonstrations, but steering them toward deployment-time constraints typically relies on differentiable guidance costs. This excludes many practical safety constraints, such as binary collision checks, joint limits, and black-box rollout costs, that are nondifferentiable. We propose Gradient-free Robot Action generation via Combined diffusion–MPPI posterior mean Estimation (GRACE), which guides a pretrained diffusion policy with Model Predictive Path Integral (MPPI) control using only forward cost evaluations. Building on the common score-ascent structure of diffusion and MPPI, GRACE constructs a cost-conditioned guidance posterior at each reverse step and estimates its mean with a single MPPI update centered at the diffusion reverse mean. For differentiable costs, GRACE recovers conventional gradient guidance under a first-order, matched-covariance approximation. GRACE attains higher success rates and fewer total constraint violations than both gradient-guided diffusion policies and sampling-based planners in simulation, and we further validate it on real hardware.",
+    "citation": "@article{anonymous2026grace, title={GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Mean Estimation}, author={Anonymous Authors}, journal={IEEE Robotics and Automation Letters (RA-L)}, note={Submitted}, year={2026}}",
     "isAccessibleForFree": true,
     "license": "https://creativecommons.org/licenses/by/4.0/"
   }
@@ -137,7 +138,7 @@
             <div class="column has-text-centered">
               <h1 class="title publication-title" style="font-size: clamp(1.45rem, 2.75vw, 2.55rem); line-height: 1.15; letter-spacing: -0.02em;">
                 <span style="display: block; white-space: nowrap;">GRACE: Gradient-Free Robot Action Generation</span>
-                <span style="display: block; white-space: nowrap;">via Combined Diffusion–MPPI Posterior Estimation</span>
+                <span style="display: block; white-space: nowrap;">via Combined Diffusion–MPPI Posterior Mean Estimation</span>
               </h1>
 
               <div class="is-size-5 publication-authors">
@@ -198,7 +199,7 @@
           <div class="column is-full">
             <h2 class="title is-3">Abstract</h2>
             <div class="content has-text-justified">
-              <p>Diffusion policies generate multimodal robot action sequences from demonstrations, but steering them toward deployment-time constraints typically relies on differentiable guidance costs. This excludes many practical safety constraints, such as binary collision checks, joint limits, and black-box rollout costs, that are nondifferentiable. We propose <b>Gradient-free Robot Action generation via Combined diffusion–MPPI posterior Estimation (GRACE)</b>, which guides a pretrained diffusion policy with Model Predictive Path Integral (MPPI) control using only forward cost evaluations. We show that the diffusion reverse step and the MPPI update share a common score-ascent structure. This lets us recast each constrained reverse step as a Bayesian posterior and approximate its mean with a single MPPI update centered at the diffusion prior mean, integrated directly into denoising rather than wrapped around it as an outer loop. Under this view, gradient guidance emerges as a special case that holds only when the cost is differentiable. GRACE thus enables constraint-aware generation without retraining the diffusion model or designing differentiable surrogates. Across simulation and real-world robot experiments, GRACE attains higher success rates and fewer safety violations than both gradient-guided diffusion policies and sampling-based planners.</p>
+              <p>Diffusion policies generate multimodal robot action sequences from demonstrations, but steering them toward deployment-time constraints typically relies on differentiable guidance costs. This excludes many practical safety constraints, such as binary collision checks, joint limits, and black-box rollout costs, that are nondifferentiable. We propose <b>Gradient-free Robot Action generation via Combined diffusion–MPPI posterior mean Estimation (GRACE)</b>, which guides a pretrained diffusion policy with Model Predictive Path Integral (MPPI) control using only forward cost evaluations. Building on the common score-ascent structure of diffusion and MPPI, GRACE constructs a cost-conditioned guidance posterior at each reverse step and estimates its mean with a single MPPI update centered at the diffusion reverse mean. For differentiable costs, GRACE recovers conventional gradient guidance under a first-order, matched-covariance approximation. GRACE attains higher success rates and fewer total constraint violations than both gradient-guided diffusion policies and sampling-based planners in simulation, and we further validate it on real hardware.</p>
             </div>
           </div>
         </div>
@@ -221,9 +222,9 @@
           <div class="column is-full">
             <div class="content is-size-5" style="line-height: 1.7;">
               <ul>
-                <li><b>Unifying diffusion and MPPI for guidance.</b> The score-ascent structure shared by the two updates is exploited to integrate the sampling-based guidance of MPPI directly into the diffusion reverse step, rather than wrapping it around the model as an outer loop.</li>
-                <li><b>Constraint-aware generation without gradients.</b> Each constrained reverse step is formulated as a Bayesian posterior whose Gaussian approximation is an MPPI update centered at the diffusion prior mean, enabling guidance under nondifferentiable costs without differentiable surrogates or retraining.</li>
-                <li><b>Improved success and safety.</b> GRACE is validated in simulation and on real hardware, attaining higher success rates and fewer safety violations than gradient-guided diffusion and sampling-based baselines while preserving the multimodality of the prior.</li>
+                <li><b>MPPI-guided reverse diffusion.</b> GRACE uses the score-ascent correspondence between diffusion and MPPI to incorporate sampling-based guidance into each reverse step, enabling adaptation to unseen deployment-time constraints without retraining.</li>
+                <li><b>Posterior-mean guidance.</b> GRACE estimates the mean of a cost-conditioned guidance posterior from cost-weighted rollouts, supporting nondifferentiable costs and recovering one-step gradient guidance under differentiability and matched covariance.</li>
+                <li><b>Improved planning performance.</b> GRACE achieves the highest success rates in both simulated tasks, reduces constraint violations relative to gradient-guided diffusion baselines, preserves prior multimodality, and transfers to real hardware.</li>
               </ul>
             </div>
           </div>
@@ -235,7 +236,7 @@
               <source src="static/videos/edited_success_book.mp4" type="video/mp4">
             </video>
             <p class="content has-text-justified" style="margin-top: 1rem; line-height: 1.6;">
-              <b>Guidance on real hardware.</b> The pretrained prior knows how to pull the book off the shelf, and the red box is an obstacle it never saw during training. Reweighting sampled rollouts by a collision cost inside each reverse step is enough to bend the motion around it, with no retraining, no differentiable surrogate, and no optimizer wrapped around the policy.
+              <b>Guidance on real hardware.</b> The pretrained prior supplies the demonstrated manipulation behavior, while GRACE reweights forward-evaluated rollouts inside each reverse step to shift the posterior mean around an unseen obstacle—without retraining or differentiating the cost or dynamics.
             </p>
           </div>
         </div>
@@ -252,13 +253,14 @@
               <img src="static/images/fig2.png" alt="GRACE inference pipeline" loading="lazy" style="width: 100%; height: auto;">
             </figure>
             <div class="content has-text-justified" style="line-height: 1.7;">
-              <ul>
-                <li><b>Diffusion and MPPI as score ascent.</b> The diffusion reverse mean can be written as a step that ascends the score of the noised data marginal, and the MPPI optimal update equals the prior mean plus a covariance-scaled score of the cost-induced distribution. Both advance the iterate along a scaled score, learned offline from demonstrations for diffusion and estimated online from cost rollouts for MPPI.</li>
-                <li><b>Constraint-conditioned reverse posterior.</b> We treat constraint satisfaction as a conditioning event and apply Bayes' rule to the reverse step. With a Boltzmann likelihood on the rollout cost, the posterior becomes a cost factor multiplying the Gaussian reverse kernel, the same product form as the MPPI optimal distribution but centered at the diffusion prior mean.</li>
-                <li><b>Gaussian approximation via KL minimization.</b> Because the cost contains binary, piecewise-constant terms, this posterior is non-Gaussian and intractable. We project it onto a Gaussian that keeps the diffusion reverse covariance and optimizes only the mean, where KL minimization matches the posterior's first moment, a ratio of cost-weighted expectations estimated with the MPPI update centered at the prior mean.</li>
-                <li><b>Decoupled guidance covariance.</b> The denoising schedule drives the reverse covariance to zero, so rollout perturbations would vanish as the action sequence is finalized. We instead draw rollouts from a separate guidance covariance and importance-reweight them, setting the exploration scale independently of the schedule.</li>
-                <li><b>Gradient guidance as a special case.</b> Linearizing the task log-likelihood around the prior mean collapses the correction to a single analytic gradient direction, exactly classical gradient guidance, which requires differentiating both the cost and the dynamics. GRACE makes no such assumption and estimates the posterior mean from forward rollouts, extending the same update to nondifferentiable costs.</li>
-              </ul>
+              <p>GRACE combines a guidance-independent diffusion prior learned offline with gradient-free, deployment-time cost evaluation. At every denoising step, the method performs the following posterior-mean update:</p>
+              <ol>
+                <li><b>Predict the diffusion reverse mean.</b> The pretrained denoiser produces the reverse mean for the current noisy action sequence.</li>
+                <li><b>Sample MPPI rollouts.</b> Candidate action sequences are drawn from an exploration kernel centered at the diffusion reverse mean, with a guidance covariance that is controlled independently of the diffusion schedule.</li>
+                <li><b>Estimate the guidance posterior mean.</b> The rollouts are evaluated with the deployment-time cost and reweighted to estimate the mean of the cost-conditioned guidance posterior.</li>
+                <li><b>Project and sample the next iterate.</b> The estimated mean defines a projected reverse kernel that retains the diffusion schedule covariance, and the next denoising iterate is sampled from this kernel.</li>
+              </ol>
+              <p>The construction follows from the shared score-ascent form of diffusion and MPPI. Under differentiable costs, a first-order approximation with matched guidance and reverse covariances recovers conventional one-step gradient guidance as a special case.</p>
             </div>
           </div>
         </div>
@@ -301,9 +303,20 @@
 
         <div class="columns is-centered">
           <div class="column is-full">
-            <figure class="image" style="margin-bottom: 1.5rem;">
-              <img src="static/images/fig4.png" alt="Distinct trajectory modes per method, and representative GRACE trajectories" loading="lazy">
-            </figure>
+            <div class="columns is-centered is-vcentered" style="margin-bottom: 1.5rem;">
+              <div class="column is-5 has-text-centered">
+                <figure class="image">
+                  <img src="static/images/fig4a.png" alt="Number of distinct trajectory modes produced by each planning method" loading="lazy" style="width: 100%; height: auto;">
+                  <figcaption class="content is-size-7" style="margin-top: 0.5rem;"><b>(a)</b> Number of distinct trajectory modes produced by each method.</figcaption>
+                </figure>
+              </div>
+              <div class="column is-7 has-text-centered">
+                <figure class="image">
+                  <img src="static/images/fig4b.png" alt="Representative trajectories for the three modes produced by GRACE UNet" loading="lazy" style="width: 100%; height: auto;">
+                  <figcaption class="content is-size-7" style="margin-top: 0.5rem;"><b>(b)</b> Representative trajectories of the three modes produced by GRACE (UNet).</figcaption>
+                </figure>
+              </div>
+            </div>
 
             <div class="table-container">
               <table class="table is-fullwidth is-striped is-hoverable is-bordered">
@@ -316,6 +329,7 @@
                   <tr><td>DA-MPPI</td><td>8/30 (26.7%)</td><td><b>0/30</b></td><td><b>1.233</b></td></tr>
                   <tr><td>PO-DP</td><td>18/30 (60.0%)</td><td>12/30</td><td>2.657</td></tr>
                   <tr><td>GG-DP</td><td>18/30 (60.0%)</td><td>12/30</td><td>2.302</td></tr>
+                  <tr><td>Diffusion-ES</td><td>7/30 (23.3%)</td><td>23/30</td><td>2.700</td></tr>
                   <tr><td><b>GRACE (CNN)</b></td><td>20/30 (66.7%)</td><td><b>0/30</b></td><td>3.681</td></tr>
                   <tr><td><b>GRACE (UNet)</b></td><td><b>25/30 (83.3%)</b></td><td>2/30</td><td>3.372</td></tr>
                 </tbody>
@@ -323,7 +337,7 @@
             </div>
 
             <div class="content has-text-justified" style="line-height: 1.7;">
-              <p>Bold marks the best value per column over 30 random start–goal pairs, ties included. The sampling planners avoid collisions but stall at 26.7% with no prior to draw on, the diffusion baselines reach 60.0% yet collide in 12 of 30 trials as a local gradient pushes them off one obstacle into the next, and GRACE alone is both accurate and safe at 83.3% with zero collisions on CNN, its longer paths being the detours the hard maps demand.</p>
+              <p>Bold marks the best value per column over 30 random start–goal pairs, ties included. CEM, MPPI, and DA-MPPI remain collision-free but reach only 26.7% success because their uninformed proposals rarely discover the required detours. PO-DP and GG-DP improve success to 60.0% but each incurs 12 collision failures from local gradient refinement. Diffusion-ES reaches 23.3% success with 23 collision failures because its outer evolutionary loop continues to mutate clean samples from a prior that never observed the added obstacles. GRACE performs guidance in-loop: GRACE (CNN) reaches 66.7% with no collisions, while GRACE (UNet) achieves the best success rate at 83.3% with only two collisions.</p>
             </div>
           </div>
         </div>
@@ -333,7 +347,7 @@
         <!-- Tracking (FR3) -->
         <div class="columns is-centered">
           <div class="column is-full">
-            <h3 class="title is-4 has-text-centered" style="margin-bottom: 0.75rem;">Manipulator Tracking</h3>
+            <h3 class="title is-4 has-text-centered" style="margin-bottom: 0.75rem;">FR3 Goal-Reaching</h3>
             <p class="content has-text-justified" style="line-height: 1.7;">
               A 7-DoF Franka Research 3 (FR3) must reach goal joint configurations without violating obstacle, self-collision, floor-contact, or joint-limit constraints introduced only at inference, and both clips below share the same prior, start (green), and goal (red), differing only in the guidance.
             </p>
@@ -372,13 +386,14 @@
                   <tr><td>DA-MPPI</td><td>23/30 (76.7%)</td><td>154.22</td><td>—</td></tr>
                   <tr><td>PO-DP</td><td>11/30 (36.7%)</td><td>647.30</td><td>220.01</td></tr>
                   <tr><td>GG-DP</td><td>15/30 (50.0%)</td><td>671.59</td><td>244.72</td></tr>
+                  <tr><td>Diffusion-ES</td><td>12/30 (40.0%)</td><td>1664.35</td><td>217.87</td></tr>
                   <tr><td><b>GRACE (CNN)</b></td><td><b>27/30 (90.0%)</b></td><td>179.23</td><td>90.53</td></tr>
                   <tr><td><b>GRACE (UNet)</b></td><td><b>27/30 (90.0%)</b></td><td>497.64</td><td><b>85.88</b></td></tr>
                 </tbody>
               </table>
             </div>
             <div class="content has-text-justified" style="line-height: 1.7;">
-              <p>Bold marks the best value per column over 30 random obstacle layouts, and guidance does not apply to the planners with no prior to steer (—). Gradient guidance collapses every safety penalty into one direction and gives up whichever term is not locally largest, while GRACE scores complete rollouts against the total cost and reaches <b>90.0%</b> on both backbones with no self-collision, floor-contact, or joint-limit violation, at about a third of the guidance cost.</p>
+              <p>Bold marks the best value per column over 30 random obstacle layouts, and guidance does not apply to diffusion-free planners (—). CEM reaches 80.0% success, while MPPI and DA-MPPI each reach 76.7%. PO-DP and GG-DP reach 36.7% and 50.0%, respectively, as a single gradient direction must balance several competing safety penalties. Diffusion-ES reaches 40.0% and has the largest total computation time, 1664.35 ms, because it generates and refines multiple complete trajectories in an outer loop. GRACE reaches the best success rate, 90.0% for both backbones, with the lowest guidance times among diffusion-guided methods.</p>
             </div>
           </div>
         </div>
@@ -765,7 +780,7 @@
           </button>
         </div>
         <pre id="bibtex-code"><code>@article{anonymous2026grace,
-  title={GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Estimation},
+  title={GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Mean Estimation},
   author={Anonymous Authors},
   journal={IEEE Robotics and Automation Letters (RA-L)},
   note={Submitted},
