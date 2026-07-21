@@ -437,53 +437,325 @@
       </div>
     </section>
 
-    <!-- ===================== Training details (reference) ===================== -->
-    <section class="section">
+    <!-- ===================== Appendix: Experimental details ===================== -->
+    <section class="section" id="appendix">
       <div class="container is-max-desktop">
-        <h2 class="title is-3 has-text-centered">Training Details</h2>
+        <h2 class="title is-3 has-text-centered">Appendix: Experimental Details</h2>
 
-        <div class="columns is-centered">
-          <div class="column is-full">
-            <p class="content has-text-justified" style="line-height: 1.7;">
-              Hyperparameters of the two interchangeable denoiser backbones for the FR3 tracking prior, which is trained offline on constraint-free demonstrations and then left untouched, so nothing here is tuned per constraint or per deployment.
-            </p>
+        <div class="content has-text-justified" style="line-height: 1.7;">
+          <p>
+            The following tables summarize the diffusion-policy training configuration and the principal hyperparameters used for each planning and guidance baseline.
+          </p>
+        </div>
 
-            <div class="table-container">
-              <table class="table is-fullwidth is-striped is-hoverable is-bordered" style="table-layout: fixed;">
-                <!-- Widths track the header text, which is far longer than the values it sits
-                     over. Left to itself the browser sizes each column to its content and the
-                     three long headers wrap while the numeric columns sit half empty. -->
-                <colgroup>
-                  <col style="width: 10%;">
-                  <col style="width: 11%;">
-                  <col style="width: 11%;">
-                  <col style="width: 16%;">
-                  <col style="width: 18%;">
-                  <col style="width: 18%;">
-                  <col style="width: 16%;">
-                </colgroup>
-                <thead>
-                  <tr>
-                    <th>Backbone</th>
-                    <th>Dataset size</th>
-                    <th>Obs horizon</th>
-                    <th>Prediction horizon</th>
-                    <th>Executed per replan</th>
-                    <th>Denoiser dims</th>
-                    <th>Optimization steps</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td>UNet</td><td>20k</td><td>1</td><td>32</td><td>16</td><td style="white-space: nowrap;">(256, 512, 1024)</td><td>200k</td></tr>
-                  <tr><td>CNN</td><td>20k</td><td>1</td><td>32</td><td>16</td><td style="white-space: nowrap;">256 &times; 3 blocks</td><td>200k</td></tr>
-                </tbody>
-              </table>
-            </div>
+        <!-- ===================== A. Training ===================== -->
+        <h3 class="title is-4" style="margin-top: 2rem;">A. Diffusion-Policy Training</h3>
 
-            <div class="content has-text-justified" style="line-height: 1.7;">
-              <p>Both backbones are FiLM-conditioned 1D convolutions over the action sequence, the UNet down-sampling through the listed channel widths and the CNN stacking residual blocks at a single width, with kernel size 5 and GroupNorm over 8 groups throughout. Every run shares the same recipe otherwise: DDPM with 100 steps on a squared-cosine schedule predicting noise, AdamW at a 1e-4 cosine-decayed learning rate with 500 warmup steps and 1e-6 weight decay, batch size 256, and an EMA of the weights.</p>
-            </div>
-          </div>
+        <h4 class="title is-5">A.1 Dataset and Sequence Configuration</h4>
+        <div class="table-container">
+          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
+            <thead>
+              <tr>
+                <th>Domain</th>
+                <th>Training data</th>
+                <th>Observation horizon</th>
+                <th>Action horizon</th>
+                <th>Prediction horizon</th>
+                <th>Action dimension</th>
+                <th>Observation features</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>Point-Mass 2D</b></td>
+                <td>10,000 demonstrations</td>
+                <td>2</td>
+                <td>8</td>
+                <td>16</td>
+                <td>2</td>
+                <td>Goal displacement, position, velocity</td>
+              </tr>
+              <tr>
+                <td><b>Panda Manipulator 3D</b></td>
+                <td>20,000 trajectories</td>
+                <td>1</td>
+                <td>16</td>
+                <td>32</td>
+                <td>7</td>
+                <td>Goal joint displacement, joint position, joint velocity</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4 class="title is-5" style="margin-top: 2rem;">A.2 Shared Training Configuration</h4>
+        <div class="table-container">
+          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
+            <thead>
+              <tr><th>Parameter</th><th>Value</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Training epochs</td><td>2,000</td></tr>
+              <tr><td>Batch size</td><td>256</td></tr>
+              <tr><td>Optimizer</td><td>AdamW</td></tr>
+              <tr><td>Initial learning rate</td><td><code>1 &times; 10<sup>&minus;4</sup></code></td></tr>
+              <tr><td>Learning-rate schedule</td><td>Cosine</td></tr>
+              <tr><td>Warm-up steps</td><td>500</td></tr>
+              <tr><td>Weight decay</td><td><code>1 &times; 10<sup>&minus;6</sup></code></td></tr>
+              <tr><td>Observation normalization</td><td>Enabled</td></tr>
+              <tr><td>Action normalization</td><td>Min&ndash;max</td></tr>
+              <tr><td>Exponential moving average</td><td>Enabled</td></tr>
+              <tr><td>Diffusion scheduler</td><td>DDPM</td></tr>
+              <tr><td>Training diffusion steps</td><td>100</td></tr>
+              <tr><td>Inference denoising steps</td><td>100</td></tr>
+              <tr><td>Beta schedule</td><td>Squared cosine</td></tr>
+              <tr><td>Prediction target</td><td>Noise &epsilon;</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4 class="title is-5" style="margin-top: 2rem;">A.3 Denoiser Architectures</h4>
+        <div class="table-container">
+          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
+            <thead>
+              <tr><th>Backbone</th><th>Architecture</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>UNet</b></td>
+                <td>Channel dimensions 256&ndash;512&ndash;1024; diffusion-time embedding 256; kernel size 5; GroupNorm with 8 groups</td>
+              </tr>
+              <tr>
+                <td><b>CNN</b></td>
+                <td>3 residual blocks; hidden and conditioning dimensions 256; diffusion-time embedding 64; kernel size 5; GroupNorm with 8 groups</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- ===================== B. Point-Mass 2D ===================== -->
+        <h3 class="title is-4" style="margin-top: 2.5rem;">B. Point-Mass 2D</h3>
+
+        <h4 class="title is-5">B.1 Task Settings</h4>
+        <div class="table-container">
+          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
+            <thead>
+              <tr><th>Parameter</th><th>Value</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Action representation</td><td>Normalized 2D planar control action</td></tr>
+              <tr><td>Action dimension</td><td>2</td></tr>
+              <tr><td>Agent radius</td><td>0.02</td></tr>
+              <tr><td>Goal tolerance</td><td>0.05</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4 class="title is-5" style="margin-top: 2rem;">B.2 Sampling-Based Planners</h4>
+
+        <h5 class="title is-6">CEM</h5>
+        <div class="table-container">
+          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
+            <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>Population size</td><td>1,000</td></tr>
+              <tr><td>Optimization iterations</td><td>5</td></tr>
+              <tr><td>Elite fraction</td><td>0.1</td></tr>
+              <tr><td>Initial sampling std</td><td>1.0</td></tr>
+              <tr><td>Minimum sampling std</td><td>0</td></tr>
+              <tr><td>Reset std at each replan</td><td>Enabled</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h5 class="title is-6" style="margin-top: 1.5rem;">MPPI</h5>
+        <div class="table-container">
+          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
+            <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>Rollout samples</td><td>1,000</td></tr>
+              <tr><td>Optimization iterations</td><td>1</td></tr>
+              <tr><td>Sampling std</td><td>1.0</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h5 class="title is-6" style="margin-top: 1.5rem;">DA-MPPI</h5>
+        <div class="table-container">
+          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
+            <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>Rollout samples</td><td>1,000</td></tr>
+              <tr><td>Annealing iterations</td><td>5</td></tr>
+              <tr><td>Initial sampling std</td><td>1.0</td></tr>
+              <tr><td>Minimum sampling std</td><td>0</td></tr>
+              <tr><td>Inter-iteration std decay</td><td>0.5</td></tr>
+              <tr><td>Horizon-wise std decay</td><td>0.95</td></tr>
+              <tr><td>Horizon decay scale</td><td>4.0</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4 class="title is-5" style="margin-top: 2rem;">B.3 Diffusion-Based Methods</h4>
+
+        <h5 class="title is-6">Gradient-Guided Diffusion</h5>
+        <div class="table-container">
+          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Backbone</th>
+                <th>Guidance stage</th>
+                <th>Gradient updates</th>
+                <th>Gradient step size</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><b>PO-DP</b></td><td>UNet</td><td>After denoising</td><td>25</td><td>0.05</td></tr>
+              <tr><td><b>GG-DP</b></td><td>UNet</td><td>Final 5 denoising steps</td><td>5 per guided step</td><td>0.05</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h5 class="title is-6" style="margin-top: 1.5rem;">Diffusion-ES</h5>
+        <div class="table-container">
+          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
+            <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>Backbone</td><td>UNet</td></tr>
+              <tr><td>Population size</td><td>100</td></tr>
+              <tr><td>Evolutionary search iterations</td><td>3</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h5 class="title is-6" style="margin-top: 1.5rem;">GRACE</h5>
+        <div class="table-container">
+          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Backbone</th>
+                <th>Guided denoising steps</th>
+                <th>Rollouts per guided step</th>
+                <th>Guidance noise scale, &sigma;<sub>g</sub></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><b>GRACE-CNN</b></td><td>CNN</td><td>Final 5 steps</td><td>1,000</td><td>0.3</td></tr>
+              <tr><td><b>GRACE-UNet</b></td><td>UNet</td><td>Final 5 steps</td><td>1,000</td><td>0.2</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- ===================== C. Panda Manipulator 3D ===================== -->
+        <h3 class="title is-4" style="margin-top: 2.5rem;">C. Panda Manipulator 3D</h3>
+
+        <h4 class="title is-5">C.1 Task Settings</h4>
+        <div class="table-container">
+          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
+            <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>Goal joint-space tolerance</td><td>0.03 rad</td></tr>
+              <tr><td>Action representation</td><td><code>delta_q</code></td></tr>
+              <tr><td>Action dimension</td><td>7</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4 class="title is-5" style="margin-top: 2rem;">C.2 Sampling-Based Planners</h4>
+
+        <h5 class="title is-6">CEM</h5>
+        <div class="table-container">
+          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
+            <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>Population size</td><td>1,000</td></tr>
+              <tr><td>Optimization iterations</td><td>5</td></tr>
+              <tr><td>Elite fraction</td><td>0.1</td></tr>
+              <tr><td>Initial sampling std</td><td>0.03 rad</td></tr>
+              <tr><td>Minimum sampling std</td><td>0</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h5 class="title is-6" style="margin-top: 1.5rem;">MPPI</h5>
+        <div class="table-container">
+          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
+            <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>Rollout samples</td><td>1,000</td></tr>
+              <tr><td>Optimization iterations</td><td>1</td></tr>
+              <tr><td>Sampling std</td><td>0.007 rad</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h5 class="title is-6" style="margin-top: 1.5rem;">DA-MPPI</h5>
+        <div class="table-container">
+          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
+            <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>Rollout samples</td><td>1,000</td></tr>
+              <tr><td>Annealing iterations</td><td>5</td></tr>
+              <tr><td>Initial sampling std</td><td>0.03 rad</td></tr>
+              <tr><td>Minimum sampling std</td><td>0</td></tr>
+              <tr><td>Inter-iteration std decay</td><td>0.5</td></tr>
+              <tr><td>Horizon-wise std decay</td><td>1.0</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4 class="title is-5" style="margin-top: 2rem;">C.3 Diffusion-Based Methods</h4>
+
+        <h5 class="title is-6">Gradient-Guided Diffusion</h5>
+        <div class="table-container">
+          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Backbone</th>
+                <th>Guidance stage</th>
+                <th>Gradient updates</th>
+                <th>Gradient step size</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><b>PO-DP</b></td><td>UNet</td><td>After denoising</td><td>15</td><td>1.0</td></tr>
+              <tr><td><b>GG-DP</b></td><td>UNet</td><td>Final 3 denoising steps</td><td>5 per guided step</td><td>1.0</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h5 class="title is-6" style="margin-top: 1.5rem;">Diffusion-ES</h5>
+        <div class="table-container">
+          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
+            <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>Backbone</td><td>UNet</td></tr>
+              <tr><td>Population size</td><td>100</td></tr>
+              <tr><td>Evolutionary search iterations</td><td>3</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h5 class="title is-6" style="margin-top: 1.5rem;">GRACE</h5>
+        <div class="table-container">
+          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Backbone</th>
+                <th>Guided denoising steps</th>
+                <th>Rollouts per guided step</th>
+                <th>Guidance noise scale, &sigma;<sub>g</sub></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><b>GRACE-CNN</b></td><td>CNN</td><td>Final 3 steps</td><td>1,000</td><td>0.3</td></tr>
+              <tr><td><b>GRACE-UNet</b></td><td>UNet</td><td>Final 3 steps</td><td>1,000</td><td>0.3</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
@@ -506,336 +778,6 @@
   year={2026},
   url={https://anonymous.4open.science/w/grace-70BB/}
 }</code></pre>
-      </div>
-    </section>
-
-    <!-- ===================== Appendix: Experimental hyperparameters ===================== -->
-    <section class="section" id="appendix">
-      <div class="container is-max-desktop">
-        <h2 class="title is-3 has-text-centered">Appendix: Experimental Hyperparameters</h2>
-
-        <div class="content has-text-justified" style="line-height: 1.7;">
-          <p>
-            The following tables summarize the planning, guidance, and training settings used in the 2D point-mass and 3D FR3 experiments.
-          </p>
-        </div>
-
-        <h3 class="title is-4" style="margin-top: 2rem;">A. Point-Mass Navigation (2D)</h3>
-
-        <h4 class="title is-5">A.1 Sampling-Based Planners</h4>
-        <div class="table-container">
-          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
-            <thead>
-              <tr>
-                <th>Method</th>
-                <th>Samples</th>
-                <th>Optimization</th>
-                <th>Std / sigma schedule</th>
-                <th>Action horizon</th>
-                <th>Prediction horizon</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><b>CEM</b></td>
-                <td>1,000 per iteration</td>
-                <td>5 CEM iterations</td>
-                <td><code>0.500000 &rarr; 0.151118 &rarr; 0.044928 &rarr; 0.014975 &rarr; 0.005564</code></td>
-                <td>8</td>
-                <td>16</td>
-              </tr>
-              <tr>
-                <td><b>MPPI</b></td>
-                <td>1,000</td>
-                <td>1 MPPI update</td>
-                <td><code>reverse_std = 0.5</code>; <code>sigma_decay = 1.0</code>; <code>sigma_min = 0</code></td>
-                <td>8</td>
-                <td>16</td>
-              </tr>
-              <tr>
-                <td><b>DA-MPPI</b></td>
-                <td>1,000 per step</td>
-                <td>5 annealing steps</td>
-                <td><code>0.452148 &rarr; 0.226074 &rarr; 0.113037 &rarr; 0.056518 &rarr; 0.028259</code>; <code>sigma_decay = 0.5</code>; <code>horizon_sigma_decay = 0.95</code></td>
-                <td>8</td>
-                <td>16</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h4 class="title is-5" style="margin-top: 2rem;">A.2 Diffusion-Prior Methods</h4>
-        <div class="table-container">
-          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
-            <thead>
-              <tr>
-                <th>Method</th>
-                <th>Backbone</th>
-                <th>Guidance / search configuration</th>
-                <th>Obs / action / prediction horizon</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><b>PO-DP</b></td>
-                <td>UNet, epoch 1839</td>
-                <td>Post-optimization after denoising at <code>step_index = 100</code>, <code>t = 0</code>; 25 internal updates; <code>reverse_std = 0</code></td>
-                <td>2 / 8 / 16</td>
-              </tr>
-              <tr>
-                <td><b>GG-DP</b></td>
-                <td>UNet, epoch 1839</td>
-                <td>Final 5 reverse steps (<code>t = 4, 3, 2, 1, 0</code>), with 5 internal updates per step and 25 updates total; <code>reverse_std: 0.041839 &rarr; 0.035890 &rarr; 0.028926 &rarr; 0.020087 &rarr; 0</code></td>
-                <td>2 / 8 / 16</td>
-              </tr>
-              <tr>
-                <td><b>Diffusion-ES</b></td>
-                <td>UNet, epoch 1839</td>
-                <td>Population 100; 3 search steps after the initial generation (4 generations total); <code>temperature = 0.1</code>; <code>eta = 1.0</code>; truncation <code>10 &rarr; 10</code>; initial generation at scheduler timestep 99 and search generations at timestep 9</td>
-                <td>2 / 8 / 16</td>
-              </tr>
-              <tr>
-                <td><b>GRACE (CNN)</b></td>
-                <td>CNN, epoch 1967</td>
-                <td>1,000 candidates and one MPPI update at each of the final 5 reverse steps (<code>t = 4, 3, 2, 1, 0</code>); 5 guidance updates; <code>reverse_std: 0.041839 &rarr; 0.035890 &rarr; 0.028926 &rarr; 0.020087 &rarr; 0</code></td>
-                <td>2 / 8 / 16</td>
-              </tr>
-              <tr>
-                <td><b>GRACE (UNet)</b></td>
-                <td>UNet, epoch 1839</td>
-                <td>1,000 candidates and one MPPI update at each of the final 5 reverse steps (<code>t = 4, 3, 2, 1, 0</code>); 5 guidance updates; <code>reverse_std: 0.041839 &rarr; 0.035890 &rarr; 0.028926 &rarr; 0.020087 &rarr; 0</code></td>
-                <td>2 / 8 / 16</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h3 class="title is-4" style="margin-top: 2.5rem;">B. FR3 Manipulator Tracking (3D)</h3>
-
-        <h4 class="title is-5">B.1 Sampling-Based Planners</h4>
-        <div class="table-container">
-          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
-            <thead>
-              <tr>
-                <th>Method</th>
-                <th>Samples</th>
-                <th>Optimization</th>
-                <th>Std / sigma schedule</th>
-                <th>Additional parameters</th>
-                <th>Executed per replan</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><b>CEM</b></td>
-                <td>1,000</td>
-                <td>5 CEM iterations</td>
-                <td><code>0.030000 &rarr; 0.023890 &rarr; 0.018463 &rarr; 0.013665 &rarr; 0.009617</code></td>
-                <td><code>elite_frac = 0.1</code>; <code>init_std = 0.03</code>; <code>min_std = 0</code>; <code>alpha = 0</code>; warm start</td>
-                <td>16 actions</td>
-              </tr>
-              <tr>
-                <td><b>MPPI</b></td>
-                <td>1,000</td>
-                <td>1 MPPI update</td>
-                <td><code>sigma = reverse_std = 0.007</code></td>
-                <td>Warm start</td>
-                <td>16 actions</td>
-              </tr>
-              <tr>
-                <td><b>DA-MPPI</b></td>
-                <td>1,000</td>
-                <td>5 diffusion/annealing steps</td>
-                <td><code>0.030000 &rarr; 0.015000 &rarr; 0.007500 &rarr; 0.003750 &rarr; 0.001875</code></td>
-                <td><code>temperature = 0.01</code>; <code>sigma_scale = 0.03</code>; trajectory factor <code>0.5</code>; horizon factor <code>1.0</code>; horizon diffuse steps <code>4</code>; warm start</td>
-                <td>16 actions</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h4 class="title is-5" style="margin-top: 2rem;">B.2 Diffusion-Prior Methods</h4>
-        <div class="table-container">
-          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
-            <thead>
-              <tr>
-                <th>Method</th>
-                <th>Backbone</th>
-                <th>Guidance / search configuration</th>
-                <th>Obs / prediction / executed horizon</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><b>PO-DP</b></td>
-                <td>UNet, epoch 1812</td>
-                <td>Post-optimization after denoising at <code>step_index = 100</code>, <code>t = 0</code>; 15 internal updates; <code>reverse_std = 0</code></td>
-                <td>1 / 32 / 16</td>
-              </tr>
-              <tr>
-                <td><b>GG-DP</b></td>
-                <td>UNet, epoch 1812</td>
-                <td>Final 3 reverse steps (<code>t = 2, 1, 0</code>), with 5 internal updates per step and 15 updates total; <code>reverse_std: 0.028926 &rarr; 0.020087 &rarr; 0</code></td>
-                <td>1 / 32 / 16</td>
-              </tr>
-              <tr>
-                <td><b>Diffusion-ES</b></td>
-                <td>UNet, epoch 1812</td>
-                <td>Population 100; 3 search steps after the initial generation (4 generations total); scheduler timesteps <code>99 &rarr; 4 &rarr; 3 &rarr; 2</code>; truncation <code>5 &rarr; 3</code>; <code>temperature = 0.1</code>; <code>eta = 1.0</code></td>
-                <td>1 / 32 / 16</td>
-              </tr>
-              <tr>
-                <td><b>GRACE (CNN)</b></td>
-                <td>CNN, epoch 1642</td>
-                <td>One MPPI update at each of the final 3 reverse steps (<code>t = 2, 1, 0</code>); 3 guidance updates; <code>reverse_std: 0.028926 &rarr; 0.020087 &rarr; 0</code></td>
-                <td>1 / 32 / 16</td>
-              </tr>
-              <tr>
-                <td><b>GRACE (UNet)</b></td>
-                <td>UNet, epoch 1812</td>
-                <td>One MPPI update at each of the final 3 reverse steps (<code>t = 2, 1, 0</code>); 3 guidance updates; <code>reverse_std: 0.028926 &rarr; 0.020087 &rarr; 0</code></td>
-                <td>1 / 32 / 16</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h3 class="title is-4" style="margin-top: 2.5rem;">C. Diffusion Model Training and Architecture</h3>
-
-        <div class="content has-text-justified" style="line-height: 1.7;">
-          <p>
-            All diffusion backbones were trained offline and kept frozen during planning and guidance. The tables below report the active training configuration embedded in the four evaluation checkpoints.
-          </p>
-        </div>
-
-        <h4 class="title is-5">C.1 Shared Training Recipe</h4>
-        <div class="table-container">
-          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
-            <thead>
-              <tr>
-                <th>Category</th>
-                <th>Parameter</th>
-                <th>Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td rowspan="14"><b>Optimization</b></td><td>Algorithm</td><td>Diffusion policy</td></tr>
-              <tr><td>Optimizer</td><td>AdamW</td></tr>
-              <tr><td>Initial learning rate</td><td><code>1e-4</code></td></tr>
-              <tr><td>Learning-rate scheduler</td><td>Cosine, stepped every batch</td></tr>
-              <tr><td>Cosine cycles</td><td><code>0.5</code></td></tr>
-              <tr><td>Warmup</td><td>500 steps</td></tr>
-              <tr><td>Configured LR decay factor</td><td><code>0.1</code></td></tr>
-              <tr><td>L2 regularization</td><td><code>1e-6</code></td></tr>
-              <tr><td>Train batches per epoch</td><td>100</td></tr>
-              <tr><td>Maximum epochs</td><td>2,000</td></tr>
-              <tr><td>Batch size</td><td>256</td></tr>
-              <tr><td>Observation normalization</td><td>Enabled</td></tr>
-              <tr><td>Action normalization</td><td>Min-max</td></tr>
-              <tr><td>EMA</td><td>Enabled, power <code>0.75</code></td></tr>
-              <tr><td rowspan="6"><b>Diffusion</b></td><td>Scheduler</td><td>DDPM</td></tr>
-              <tr><td>Training timesteps</td><td>100</td></tr>
-              <tr><td>Inference timesteps</td><td>100</td></tr>
-              <tr><td>Beta schedule</td><td><code>squaredcos_cap_v2</code></td></tr>
-              <tr><td>Prediction target</td><td>Epsilon / noise</td></tr>
-              <tr><td>Sample clipping</td><td>Enabled</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h4 class="title is-5" style="margin-top: 2rem;">C.2 Point-Mass 2D Training</h4>
-        <div class="table-container">
-          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
-            <thead>
-              <tr>
-                <th>Training component</th>
-                <th>Configuration</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td><b>Dataset</b></td><td><code>pointmass2d_dt_0.02_dataset_10000.hdf5</code> (10k trajectories)</td></tr>
-              <tr><td><b>Training environment</b></td><td><code>PointMassDense2D-v0</code></td></tr>
-              <tr><td><b>Sequence configuration</b></td><td>Sequence length 16; frame stack 2; observation horizon 2; action horizon 8; prediction horizon 16</td></tr>
-              <tr><td><b>Action space</b></td><td>2 dimensions</td></tr>
-              <tr><td><b>Observation inputs</b></td><td><code>goal_delta [2]</code>, <code>position [2]</code>, <code>velocity [2]</code></td></tr>
-              <tr><td><b>Training seed</b></td><td>1</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="table-container">
-          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
-            <thead>
-              <tr>
-                <th>Backbone</th>
-                <th>Architecture</th>
-                <th>Selected checkpoint</th>
-                <th>Validation value</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><b>Conditional 1D UNet</b></td>
-                <td>Diffusion-step embedding 256; down dimensions <code>[256, 512, 1024]</code>; kernel size 5; GroupNorm with 8 groups</td>
-                <td><code>pointmass_dense2d_dt_0.02_delta_goal</code><br>Epoch 1839</td>
-                <td><code>0.00961034782230854</code></td>
-              </tr>
-              <tr>
-                <td><b>Simple Conditional CNN</b></td>
-                <td>Hidden dimension 256; conditioning feature dimension 256; timestep embedding 64; 3 residual blocks; kernel size 5; GroupNorm with 8 groups</td>
-                <td><code>pointmass_dense2d_dt_0.02_delta_goal_simple_cnn</code><br>Epoch 1967</td>
-                <td><code>0.011415098514407872</code></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h4 class="title is-5" style="margin-top: 2rem;">C.3 FR3 Manipulator 3D Training</h4>
-        <div class="table-container">
-          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
-            <thead>
-              <tr>
-                <th>Training component</th>
-                <th>Configuration</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td><b>Dataset</b></td><td><code>tracking_feedback_20000.hdf5</code> (20k trajectories)</td></tr>
-              <tr><td><b>Training environment</b></td><td><code>PandaTrackingOffline</code></td></tr>
-              <tr><td><b>Sequence configuration</b></td><td>Sequence length 32; frame stack 1; observation horizon 1; action horizon 16; prediction horizon 32</td></tr>
-              <tr><td><b>Action space</b></td><td>7-dimensional joint-space <code>delta_q</code></td></tr>
-              <tr><td><b>Observation inputs</b></td><td><code>goal_delta_q [7]</code>, <code>robot0_joint_pos [7]</code>, <code>robot0_joint_vel [7]</code></td></tr>
-              <tr><td><b>Training seed</b></td><td>20</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="table-container">
-          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
-            <thead>
-              <tr>
-                <th>Backbone</th>
-                <th>Architecture</th>
-                <th>Selected checkpoint</th>
-                <th>Validation value</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><b>Conditional 1D UNet</b></td>
-                <td>Diffusion-step embedding 256; down dimensions <code>[256, 512, 1024]</code>; kernel size 5; GroupNorm with 8 groups</td>
-                <td><code>no_ros2_delta_q_obs_1</code><br>Epoch 1812</td>
-                <td><code>0.00017466616700403392</code></td>
-              </tr>
-              <tr>
-                <td><b>Simple Conditional CNN</b></td>
-                <td>Hidden dimension 256; conditioning feature dimension 256; timestep embedding 64; 3 residual blocks; kernel size 5; GroupNorm with 8 groups</td>
-                <td><code>no_ros2_delta_q_obs_1_cnn</code><br>Epoch 1642</td>
-                <td><code>0.00017160400384454987</code></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
       </div>
     </section>
 
