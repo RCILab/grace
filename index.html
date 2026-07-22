@@ -17,7 +17,6 @@
        - static/images/fig5.png          (FR3 execution snapshots)
        - static/images/favicon.ico
        - static/pdfs/grace_paper.pdf
-       - static/videos/banner_video.mp4  (overview reel, top of page)
        - static/videos/edited_pointmass_dp.mp4           (Sim, point-mass: diffusion policy fails)
        - static/videos/edited_pointmass_grace.mp4        (Sim, point-mass: GRACE reaches the goal)
        - static/videos/edited_tracking_dp.mp4            (Sim, FR3 tracking: diffusion policy collides)
@@ -184,9 +183,18 @@
       <div class="container is-max-desktop">
         <div class="hero-body">
           <h2 class="title is-3 has-text-centered">Overview</h2>
-          <video poster="static/images/fig1.png" id="teaser-video" autoplay controls muted loop playsinline height="100%" preload="metadata">
-            <source src="static/videos/banner_video.mp4" type="video/mp4">
-          </video>
+          <div style="position: relative; width: 100%; padding-top: 56.25%; overflow: hidden; border-radius: 10px;">
+            <iframe
+              id="teaser-video"
+              src="https://www.youtube-nocookie.com/embed/D1fgvnKC2kM?rel=0"
+              title="GRACE overview video"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+              style="position: absolute; inset: 0; width: 100%; height: 100%; border: 0;">
+            </iframe>
+          </div>
         </div>
       </div>
     </section>
