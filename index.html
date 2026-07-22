@@ -17,15 +17,17 @@
        - static/images/fig5.png          (FR3 execution snapshots)
        - static/images/favicon.ico
        - static/pdfs/grace_paper.pdf
-       - static/videos/overview.mp4  (overview reel, top of page)
-       - static/videos/2d/edited_{cem,mppi,da_mppi,podp,ggdp,diffusion_es,grace_cnn,grace_unet}.mp4
-                                                  (Sim, point-mass: 8 baselines + GRACE, 4 per row)
-       - static/videos/3d/edited_3d_{cem,mppi,damppi,po_dp,gg_dp,diffusion_es,grace_cnn,grace_unet}.mp4
-                                                  (Sim, FR3 goal-reaching: 8 baselines + GRACE, 4 per row)
-       - static/videos/real/edited_success_book_mask.mp4  (Contributions: concept demo, book retrieval
+       - static/videos/banner_video.mp4  (overview reel, top of page)
+       - static/videos/edited_pointmass_dp.mp4           (Sim, point-mass: diffusion policy fails)
+       - static/videos/edited_pointmass_grace.mp4        (Sim, point-mass: GRACE reaches the goal)
+       - static/videos/edited_tracking_dp.mp4            (Sim, FR3 tracking: diffusion policy collides)
+       - static/videos/edited_tracking_grace.mp4         (Sim, FR3 tracking: GRACE reaches the goal)
+       - static/videos/edited_success_book.mp4    (Contributions: concept demo, book retrieval
                                                    around an unseen obstacle; qualitative, no metrics)
-       - static/videos/real/edited_fail2.mp4           (Real-world, shelf placement: diffusion policy fails)
-       - static/videos/real/edited_success_floor1.mp4  (Real-world, shelf placement: GRACE succeeds)
+       - static/videos/edited_fail2.mp4           (Real-world, shelf placement: unguided DP fails)
+       - static/videos/edited_success_floor1.mp4  (Real-world, shelf placement: GRACE succeeds)
+
+       Unused: static/videos/carousel1.mp4, carousel2.mp4, carousel3.mp4 (earlier placeholder clips).
        ============================================================= -->
 
   <meta name="title" content="GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Mean Estimation">
@@ -113,7 +115,7 @@
     "url": "https://anonymous.4open.science/w/grace-70BB/",
     "image": "https://anonymous.4open.science/w/grace-70BB/static/images/fig1.png",
     "keywords": ["diffusion models", "model predictive path integral control", "motion planning", "posterior sampling", "gradient-free optimization"],
-    "abstract": "Diffusion policies generate multimodal robot action sequences from demonstrations, but steering them toward deployment-time constraints typically relies on differentiable guidance costs. This excludes many practical safety constraints, such as binary collision checks, joint limits, and black-box rollout costs that are nondifferentiable. We propose Gradient-free Robot Action generation via Combined diffusion–MPPI posterior mean Estimation (GRACE), which guides a pretrained diffusion policy with Model Predictive Path Integral (MPPI) control using only forward cost evaluations. Building on the common score-ascent structure of diffusion and MPPI, GRACE constructs a cost-conditioned guidance posterior at each reverse step and estimates its mean with a single MPPI update centered at the diffusion reverse mean. For differentiable costs, GRACE recovers conventional gradient guidance under a first-order, matched-covariance approximation. GRACE attains higher success rates than diffusion-based and sampling-based baselines in simulation. On a real 7-DoF manipulator, GRACE avoids a deployment-time obstacle that the unguided prior collides with in every trial.",
+    "abstract": "Diffusion policies generate multimodal robot action sequences from demonstrations, but steering them toward deployment-time constraints typically relies on differentiable guidance costs. This excludes many practical safety constraints, such as binary collision checks, joint limits, and black-box rollout costs, that are nondifferentiable. We propose Gradient-free Robot Action generation via Combined diffusion–MPPI posterior mean Estimation (GRACE), which guides a pretrained diffusion policy with Model Predictive Path Integral (MPPI) control using only forward cost evaluations. Building on the common score-ascent structure of diffusion and MPPI, GRACE constructs a cost-conditioned guidance posterior at each reverse step and estimates its mean with a single MPPI update centered at the diffusion reverse mean. For differentiable costs, GRACE recovers conventional gradient guidance under a first-order, matched-covariance approximation. GRACE attains higher success rates and fewer total constraint violations than both gradient-guided diffusion policies and sampling-based planners in simulation, and we further validate it on real hardware.",
     "citation": "@article{anonymous2026grace, title={GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Mean Estimation}, author={Anonymous Authors}, journal={IEEE Robotics and Automation Letters (RA-L)}, note={Submitted}, year={2026}}",
     "isAccessibleForFree": true,
     "license": "https://creativecommons.org/licenses/by/4.0/"
@@ -183,7 +185,7 @@
         <div class="hero-body">
           <h2 class="title is-3 has-text-centered">Overview</h2>
           <video poster="static/images/fig1.png" id="teaser-video" autoplay controls muted loop playsinline height="100%" preload="metadata">
-            <source src="static/videos/overview.mp4" type="video/mp4">
+            <source src="static/videos/banner_video.mp4" type="video/mp4">
           </video>
         </div>
       </div>
@@ -196,7 +198,7 @@
           <div class="column is-full">
             <h2 class="title is-3">Abstract</h2>
             <div class="content has-text-justified">
-              <p>Diffusion policies generate multimodal robot action sequences from demonstrations, but steering them toward deployment-time constraints typically relies on differentiable guidance costs. This excludes many practical safety constraints, such as binary collision checks, joint limits, and black-box rollout costs that are nondifferentiable. We propose <b>Gradient-free Robot Action generation via Combined diffusion–MPPI posterior mean Estimation (GRACE)</b>, which guides a pretrained diffusion policy with Model Predictive Path Integral (MPPI) control using only forward cost evaluations. Building on the common score-ascent structure of diffusion and MPPI, GRACE constructs a cost-conditioned guidance posterior at each reverse step and estimates its mean with a single MPPI update centered at the diffusion reverse mean. For differentiable costs, GRACE recovers conventional gradient guidance under a first-order, matched-covariance approximation. GRACE attains higher success rates than diffusion-based and sampling-based baselines in simulation. On a real 7-DoF manipulator, GRACE avoids a deployment-time obstacle that the unguided prior collides with in every trial.</p>
+              <p>Diffusion policies generate multimodal robot action sequences from demonstrations, but steering them toward deployment-time constraints typically relies on differentiable guidance costs. This excludes many practical safety constraints, such as binary collision checks, joint limits, and black-box rollout costs, that are nondifferentiable. We propose <b>Gradient-free Robot Action generation via Combined diffusion–MPPI posterior mean Estimation (GRACE)</b>, which guides a pretrained diffusion policy with Model Predictive Path Integral (MPPI) control using only forward cost evaluations. Building on the common score-ascent structure of diffusion and MPPI, GRACE constructs a cost-conditioned guidance posterior at each reverse step and estimates its mean with a single MPPI update centered at the diffusion reverse mean. For differentiable costs, GRACE recovers conventional gradient guidance under a first-order, matched-covariance approximation. GRACE attains higher success rates and fewer total constraint violations than both gradient-guided diffusion policies and sampling-based planners in simulation, and we further validate it on real hardware.</p>
             </div>
           </div>
         </div>
@@ -230,7 +232,7 @@
         <div class="columns is-centered">
           <div class="column is-full has-text-centered">
             <video id="concept-video" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/real/edited_success_book_mask.mp4" type="video/mp4">
+              <source src="static/videos/edited_success_book.mp4" type="video/mp4">
             </video>
             <p class="content has-text-justified" style="margin-top: 1rem; line-height: 1.6;">
               <b>Guidance on real hardware.</b> The pretrained prior supplies the demonstrated manipulation behavior, while GRACE reweights forward-evaluated rollouts inside each reverse step to shift the posterior mean around an unseen obstacle—without retraining or differentiating the cost or dynamics.
@@ -274,92 +276,59 @@
           <div class="column is-full">
             <h3 class="title is-4 has-text-centered" style="margin-bottom: 0.75rem;">Point-Mass Navigation</h3>
             <p class="content has-text-justified" style="line-height: 1.7;">
-              A planar point mass must reach the goal across a cluttered map without collision or timeout, where the gray obstacles were present during training but the red ones appear only at inference, and every clip below shares the same map, differing only in the planner.
+              A planar point mass must reach the goal across a cluttered map without collision or timeout, where the gray obstacles were present during training but the red ones appear only at inference, and both clips below share the same prior and map, differing only in the guidance.
             </p>
           </div>
         </div>
 
-        <div class="columns is-centered is-multiline">
-          <div class="column is-one-quarter has-text-centered">
-            <video id="video-2d-cem" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/2d/edited_cem.mp4" type="video/mp4">
+        <div class="columns is-centered">
+          <div class="column is-half has-text-centered">
+            <video id="video-2d-dp" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/edited_pointmass_dp.mp4" type="video/mp4">
             </video>
-            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>CEM</b></p>
+            <p class="content has-text-justified" style="margin-top: 0.5rem; line-height: 1.6;">
+              <b>Diffusion Policy.</b> The prior proposes a route through the map, and the local gradient correction cannot pull it clear of the unseen obstacles it runs into.
+            </p>
           </div>
-          <div class="column is-one-quarter has-text-centered">
-            <video id="video-2d-mppi" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/2d/edited_mppi.mp4" type="video/mp4">
+          <div class="column is-half has-text-centered">
+            <video id="video-2d-grace" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/edited_pointmass_grace.mp4" type="video/mp4">
             </video>
-            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>MPPI</b></p>
-          </div>
-          <div class="column is-one-quarter has-text-centered">
-            <video id="video-2d-dampppi" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/2d/edited_da_mppi.mp4" type="video/mp4">
-            </video>
-            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>DA-MPPI</b></p>
-          </div>
-          <div class="column is-one-quarter has-text-centered">
-            <video id="video-2d-podp" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/2d/edited_podp.mp4" type="video/mp4">
-            </video>
-            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>PO-DP</b></p>
-          </div>
-          <div class="column is-one-quarter has-text-centered">
-            <video id="video-2d-ggdp" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/2d/edited_ggdp.mp4" type="video/mp4">
-            </video>
-            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>GG-DP</b></p>
-          </div>
-          <div class="column is-one-quarter has-text-centered">
-            <video id="video-2d-des" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/2d/edited_diffusion_es.mp4" type="video/mp4">
-            </video>
-            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>Diffusion-ES</b></p>
-          </div>
-          <div class="column is-one-quarter has-text-centered">
-            <video id="video-2d-grace-cnn" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/2d/edited_grace_cnn.mp4" type="video/mp4">
-            </video>
-            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>GRACE (CNN, ours)</b></p>
-          </div>
-          <div class="column is-one-quarter has-text-centered">
-            <video id="video-2d-grace-unet" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/2d/edited_grace_unet.mp4" type="video/mp4">
-            </video>
-            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>GRACE (UNet, ours)</b></p>
+            <p class="content has-text-justified" style="margin-top: 0.5rem; line-height: 1.6;">
+              <b>GRACE (ours).</b> Reweighting whole rollouts against the collision cost detours the same prior around the unseen obstacles and reaches the goal.
+            </p>
           </div>
         </div>
 
         <div class="columns is-centered">
           <div class="column is-full">
+            <figure class="image has-text-centered" style="margin-bottom: 1.5rem;">
+              <img src="static/images/fig4.png" alt="Multimodality evaluation showing the number of trajectory modes produced by each method and representative GRACE UNet trajectories" loading="lazy" style="width: 100%; height: auto;">
+              <figcaption class="content is-size-7" style="margin-top: 0.5rem;">
+                <b>Multimodality evaluation.</b> (a) Number of distinct trajectory modes produced by each method. (b) Representative trajectories of the three modes produced by GRACE (UNet).
+              </figcaption>
+            </figure>
+
             <div class="table-container">
               <table class="table is-fullwidth is-striped is-hoverable is-bordered">
                 <thead>
                   <tr><th>Method</th><th>Success [%] &uarr;</th><th>Collision Fail &darr;</th><th>Path Length [m] &darr;</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td>CEM</td><td>8/30 (26.7%)</td><td><b>0/30</b></td><td>1.247 &plusmn; 0.143</td></tr>
-                  <tr><td>MPPI</td><td>8/30 (26.7%)</td><td><b>0/30</b></td><td>1.241 &plusmn; 0.123</td></tr>
-                  <tr><td>DA-MPPI</td><td>8/30 (26.7%)</td><td><b>0/30</b></td><td><b>1.233 &plusmn; 0.120</b></td></tr>
-                  <tr><td>PO-DP</td><td>18/30 (60.0%)</td><td>12/30</td><td>2.657 &plusmn; 1.021</td></tr>
-                  <tr><td>GG-DP</td><td>18/30 (60.0%)</td><td>12/30</td><td>2.302 &plusmn; 1.115</td></tr>
-                  <tr><td>Diffusion-ES</td><td>7/30 (23.3%)</td><td>23/30</td><td>2.700 &plusmn; 0.832</td></tr>
-                  <tr><td><b>GRACE (CNN)</b></td><td>20/30 (66.7%)</td><td><b>0/30</b></td><td>3.681 &plusmn; 1.659</td></tr>
-                  <tr><td><b>GRACE (UNet)</b></td><td><b>25/30 (83.3%)</b></td><td>2/30</td><td>3.372 &plusmn; 1.538</td></tr>
+                  <tr><td>CEM</td><td>8/30 (26.7%)</td><td><b>0/30</b></td><td>1.247</td></tr>
+                  <tr><td>MPPI</td><td>8/30 (26.7%)</td><td><b>0/30</b></td><td>1.241</td></tr>
+                  <tr><td>DA-MPPI</td><td>8/30 (26.7%)</td><td><b>0/30</b></td><td><b>1.233</b></td></tr>
+                  <tr><td>PO-DP</td><td>18/30 (60.0%)</td><td>12/30</td><td>2.657</td></tr>
+                  <tr><td>GG-DP</td><td>18/30 (60.0%)</td><td>12/30</td><td>2.302</td></tr>
+                  <tr><td>Diffusion-ES</td><td>7/30 (23.3%)</td><td>23/30</td><td>2.700</td></tr>
+                  <tr><td><b>GRACE (CNN)</b></td><td>20/30 (66.7%)</td><td><b>0/30</b></td><td>3.681</td></tr>
+                  <tr><td><b>GRACE (UNet)</b></td><td><b>25/30 (83.3%)</b></td><td>2/30</td><td>3.372</td></tr>
                 </tbody>
               </table>
             </div>
 
             <div class="content has-text-justified" style="line-height: 1.7;">
               <p>Bold marks the best value per column over 30 random start–goal pairs, ties included. CEM, MPPI, and DA-MPPI remain collision-free but reach only 26.7% success because their uninformed proposals rarely discover the required detours. PO-DP and GG-DP improve success to 60.0% but each incurs 12 collision failures from local gradient refinement. Diffusion-ES reaches 23.3% success with 23 collision failures because its outer evolutionary loop continues to mutate clean samples from a prior that never observed the added obstacles. GRACE performs guidance in-loop: GRACE (CNN) reaches 66.7% with no collisions, while GRACE (UNet) achieves the best success rate at 83.3% with only two collisions.</p>
-            </div>
-
-            <figure class="image has-text-centered" style="margin-top: 1.5rem; margin-bottom: 1rem;">
-              <img src="static/images/fig4.png" alt="Multimodality evaluation showing the number of distinct trajectory modes produced by each method and the three modes produced by GRACE (UNet)" loading="lazy" style="width: 100%; height: auto;">
-            </figure>
-
-            <div class="content has-text-justified" style="line-height: 1.7;">
-              <p><b>Multimodality.</b> Success alone does not show whether guidance preserves the prior's diversity, so we also count the distinct routes each method discovers. The diffusion-free planners collapse to a single mode and Diffusion-ES retains two, whereas GRACE keeps four modes with the CNN backbone and three with the UNet—matching the gradient-guided baselines while succeeding far more often. On the right, those three GRACE (UNet) routes are drawn on one map: the same prior, steered around the unseen obstacles on three genuinely different paths rather than collapsed onto one.</p>
             </div>
           </div>
         </div>
@@ -371,59 +340,27 @@
           <div class="column is-full">
             <h3 class="title is-4 has-text-centered" style="margin-bottom: 0.75rem;">FR3 Goal-Reaching</h3>
             <p class="content has-text-justified" style="line-height: 1.7;">
-              A 7-DoF Franka Research 3 (FR3) must reach goal joint configurations without violating obstacle, self-collision, floor-contact, or joint-limit constraints introduced only at inference, and every clip below shares the same start (green) and goal (red), differing only in the planner.
+              A 7-DoF Franka Research 3 (FR3) must reach goal joint configurations without violating obstacle, self-collision, floor-contact, or joint-limit constraints introduced only at inference, and both clips below share the same prior, start (green), and goal (red), differing only in the guidance.
             </p>
           </div>
         </div>
 
-        <div class="columns is-centered is-multiline">
-          <div class="column is-one-quarter has-text-centered">
-            <video id="video-fr3-cem" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/3d/edited_3d_cem.mp4" type="video/mp4">
+        <div class="columns is-centered">
+          <div class="column is-half has-text-centered">
+            <video id="video-fr3-dp" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/edited_tracking_dp.mp4" type="video/mp4">
             </video>
-            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>CEM</b></p>
+            <p class="content has-text-justified" style="margin-top: 0.5rem; line-height: 1.6;">
+              <b>Diffusion Policy.</b> One update direction carries every safety penalty, so the arm is pulled into an obstacle and the trial ends on a collision, short of the goal.
+            </p>
           </div>
-          <div class="column is-one-quarter has-text-centered">
-            <video id="video-fr3-mppi" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/3d/edited_3d_mppi.mp4" type="video/mp4">
+          <div class="column is-half has-text-centered">
+            <video id="video-fr3-grace" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/edited_tracking_grace.mp4" type="video/mp4">
             </video>
-            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>MPPI</b></p>
-          </div>
-          <div class="column is-one-quarter has-text-centered">
-            <video id="video-fr3-damppi" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/3d/edited_3d_damppi.mp4" type="video/mp4">
-            </video>
-            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>DA-MPPI</b></p>
-          </div>
-          <div class="column is-one-quarter has-text-centered">
-            <video id="video-fr3-podp" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/3d/edited_3d_po_dp.mp4" type="video/mp4">
-            </video>
-            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>PO-DP</b></p>
-          </div>
-          <div class="column is-one-quarter has-text-centered">
-            <video id="video-fr3-ggdp" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/3d/edited_3d_gg_dp.mp4" type="video/mp4">
-            </video>
-            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>GG-DP</b></p>
-          </div>
-          <div class="column is-one-quarter has-text-centered">
-            <video id="video-fr3-des" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/3d/edited_3d_diffusion_es.mp4" type="video/mp4">
-            </video>
-            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>Diffusion-ES</b></p>
-          </div>
-          <div class="column is-one-quarter has-text-centered">
-            <video id="video-fr3-grace-cnn" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/3d/edited_3d_grace_cnn.mp4" type="video/mp4">
-            </video>
-            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>GRACE (CNN, ours)</b></p>
-          </div>
-          <div class="column is-one-quarter has-text-centered">
-            <video id="video-fr3-grace-unet" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/3d/edited_3d_grace_unet.mp4" type="video/mp4">
-            </video>
-            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>GRACE (UNet, ours)</b></p>
+            <p class="content has-text-justified" style="margin-top: 0.5rem; line-height: 1.6;">
+              <b>GRACE (ours).</b> Reweighting complete rollouts against the total cost bends the same prior around the clutter, and the goal is reached with every safety constraint intact.
+            </p>
           </div>
         </div>
 
@@ -435,14 +372,14 @@
                   <tr><th>Method</th><th>Success [%] &uarr;</th><th>Computation Time [ms] &darr;</th><th>Guidance Time [ms] &darr;</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td>CEM</td><td>24/30 (80.0%)</td><td>153.45 &plusmn; 2.55</td><td>—</td></tr>
-                  <tr><td>MPPI</td><td>23/30 (76.7%)</td><td><b>29.88 &plusmn; 0.49</b></td><td>—</td></tr>
-                  <tr><td>DA-MPPI</td><td>23/30 (76.7%)</td><td>154.22 &plusmn; 2.49</td><td>—</td></tr>
-                  <tr><td>PO-DP</td><td>11/30 (36.7%)</td><td>647.30 &plusmn; 15.83</td><td>220.01 &plusmn; 8.76</td></tr>
-                  <tr><td>GG-DP</td><td>15/30 (50.0%)</td><td>671.59 &plusmn; 9.00</td><td>244.72 &plusmn; 5.45</td></tr>
-                  <tr><td>Diffusion-ES</td><td>12/30 (40.0%)</td><td>1664.35 &plusmn; 6.72</td><td>217.87 &plusmn; 0.70</td></tr>
-                  <tr><td><b>GRACE (CNN)</b></td><td><b>27/30 (90.0%)</b></td><td>179.23 &plusmn; 1.91</td><td>90.53 &plusmn; 0.71</td></tr>
-                  <tr><td><b>GRACE (UNet)</b></td><td><b>27/30 (90.0%)</b></td><td>497.64 &plusmn; 7.08</td><td><b>85.88 &plusmn; 0.52</b></td></tr>
+                  <tr><td>CEM</td><td>24/30 (80.0%)</td><td>153.45</td><td>—</td></tr>
+                  <tr><td>MPPI</td><td>23/30 (76.7%)</td><td><b>29.88</b></td><td>—</td></tr>
+                  <tr><td>DA-MPPI</td><td>23/30 (76.7%)</td><td>154.22</td><td>—</td></tr>
+                  <tr><td>PO-DP</td><td>11/30 (36.7%)</td><td>647.30</td><td>220.01</td></tr>
+                  <tr><td>GG-DP</td><td>15/30 (50.0%)</td><td>671.59</td><td>244.72</td></tr>
+                  <tr><td>Diffusion-ES</td><td>12/30 (40.0%)</td><td>1664.35</td><td>217.87</td></tr>
+                  <tr><td><b>GRACE (CNN)</b></td><td><b>27/30 (90.0%)</b></td><td>179.23</td><td>90.53</td></tr>
+                  <tr><td><b>GRACE (UNet)</b></td><td><b>27/30 (90.0%)</b></td><td>497.64</td><td><b>85.88</b></td></tr>
                 </tbody>
               </table>
             </div>
@@ -469,15 +406,15 @@
         <div class="columns is-centered">
           <div class="column is-half has-text-centered">
             <video id="video-real-fail" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/real/edited_fail2.mp4" type="video/mp4">
+              <source src="static/videos/edited_fail2.mp4" type="video/mp4">
             </video>
             <p class="content has-text-justified" style="margin-top: 0.5rem; line-height: 1.6;">
-              <b>Diffusion Policy.</b> Reproduces the demonstrated placing motion faithfully, and drives the cube straight into the box it never saw.
+              <b>Diffusion Policy (unguided).</b> Reproduces the demonstrated placing motion faithfully, and drives the cube straight into the box it never saw.
             </p>
           </div>
           <div class="column is-half has-text-centered">
             <video id="video-real-success" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/real/edited_success_floor1.mp4" type="video/mp4">
+              <source src="static/videos/edited_success_floor1.mp4" type="video/mp4">
             </video>
             <p class="content has-text-justified" style="margin-top: 0.5rem; line-height: 1.6;">
               <b>GRACE (ours).</b> The same prior, reweighted at each reverse step by the binary collision cost, detours around the box and still completes the placement.
