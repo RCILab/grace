@@ -17,14 +17,13 @@
        - static/images/fig5.png          (FR3 execution snapshots)
        - static/images/favicon.ico
        - static/pdfs/grace_paper.pdf
-       - static/videos/edited_pointmass_dp.mp4           (Sim, point-mass: diffusion policy fails)
-       - static/videos/edited_pointmass_grace.mp4        (Sim, point-mass: GRACE reaches the goal)
-       - static/videos/edited_tracking_dp.mp4            (Sim, FR3 tracking: diffusion policy collides)
-       - static/videos/edited_tracking_grace.mp4         (Sim, FR3 tracking: GRACE reaches the goal)
-       - static/videos/edited_success_book.mp4    (Contributions: concept demo, book retrieval
-                                                   around an unseen obstacle; qualitative, no metrics)
-       - static/videos/edited_fail2.mp4           (Real-world, shelf placement: unguided DP fails)
-       - static/videos/edited_success_floor1.mp4  (Real-world, shelf placement: GRACE succeeds)
+       - static/videos/2d/edited_{cem,mppi,da_mppi,podp,ggdp,diffusion_es,grace_cnn,grace_unet}.mp4
+                                                   (Sim, point-mass: 8 methods, 4 per row)
+       - static/videos/3d/edited_3d_{cem,mppi,damppi,po_dp,gg_dp,diffusion_es,grace_cnn,grace_unet}.mp4
+                                                   (Sim, FR3 goal-reaching: 8 methods, 4 per row)
+       - static/videos/real/edited_success_book_mask.mp4  (Contributions: concept demo)
+       - static/videos/real/edited_fail2.mp4              (Real-world: unguided prior fails)
+       - static/videos/real/edited_success_floor1.mp4     (Real-world: GRACE succeeds)
 
        Unused: static/videos/carousel1.mp4, carousel2.mp4, carousel3.mp4 (earlier placeholder clips).
        ============================================================= -->
@@ -284,27 +283,59 @@
           <div class="column is-full">
             <h3 class="title is-4 has-text-centered" style="margin-bottom: 0.75rem;">Point-Mass Navigation</h3>
             <p class="content has-text-justified" style="line-height: 1.7;">
-              A planar point mass must reach the goal across a cluttered map without collision or timeout, where the gray obstacles were present during training but the red ones appear only at inference, and both clips below share the same prior and map, differing only in the guidance.
+              A planar point mass must reach the goal across a cluttered map without collision or timeout, where the gray obstacles were present during training but the red ones appear only at inference, and every clip below shares the same map, differing only in the planner.
             </p>
           </div>
         </div>
 
-        <div class="columns is-centered">
-          <div class="column is-half has-text-centered">
-            <video id="video-2d-dp" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/edited_pointmass_dp.mp4" type="video/mp4">
+        <div class="columns is-centered is-multiline">
+          <div class="column is-one-quarter has-text-centered">
+            <video id="video-2d-cem" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/2d/edited_cem.mp4" type="video/mp4">
             </video>
-            <p class="content has-text-justified" style="margin-top: 0.5rem; line-height: 1.6;">
-              <b>Diffusion Policy.</b> The prior proposes a route through the map, and the local gradient correction cannot pull it clear of the unseen obstacles it runs into.
-            </p>
+            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>CEM</b></p>
           </div>
-          <div class="column is-half has-text-centered">
-            <video id="video-2d-grace" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/edited_pointmass_grace.mp4" type="video/mp4">
+          <div class="column is-one-quarter has-text-centered">
+            <video id="video-2d-mppi" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/2d/edited_mppi.mp4" type="video/mp4">
             </video>
-            <p class="content has-text-justified" style="margin-top: 0.5rem; line-height: 1.6;">
-              <b>GRACE (ours).</b> Reweighting whole rollouts against the collision cost detours the same prior around the unseen obstacles and reaches the goal.
-            </p>
+            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>MPPI</b></p>
+          </div>
+          <div class="column is-one-quarter has-text-centered">
+            <video id="video-2d-dampppi" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/2d/edited_da_mppi.mp4" type="video/mp4">
+            </video>
+            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>DA-MPPI</b></p>
+          </div>
+          <div class="column is-one-quarter has-text-centered">
+            <video id="video-2d-podp" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/2d/edited_podp.mp4" type="video/mp4">
+            </video>
+            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>PO-DP</b></p>
+          </div>
+          <div class="column is-one-quarter has-text-centered">
+            <video id="video-2d-ggdp" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/2d/edited_ggdp.mp4" type="video/mp4">
+            </video>
+            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>GG-DP</b></p>
+          </div>
+          <div class="column is-one-quarter has-text-centered">
+            <video id="video-2d-des" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/2d/edited_diffusion_es.mp4" type="video/mp4">
+            </video>
+            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>Diffusion-ES</b></p>
+          </div>
+          <div class="column is-one-quarter has-text-centered">
+            <video id="video-2d-grace-cnn" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/2d/edited_grace_cnn.mp4" type="video/mp4">
+            </video>
+            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>GRACE (CNN, ours)</b></p>
+          </div>
+          <div class="column is-one-quarter has-text-centered">
+            <video id="video-2d-grace-unet" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/2d/edited_grace_unet.mp4" type="video/mp4">
+            </video>
+            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>GRACE (UNet, ours)</b></p>
           </div>
         </div>
 
@@ -348,27 +379,59 @@
           <div class="column is-full">
             <h3 class="title is-4 has-text-centered" style="margin-bottom: 0.75rem;">FR3 Goal-Reaching</h3>
             <p class="content has-text-justified" style="line-height: 1.7;">
-              A 7-DoF Franka Research 3 (FR3) must reach goal joint configurations without violating obstacle, self-collision, floor-contact, or joint-limit constraints introduced only at inference, and both clips below share the same prior, start (green), and goal (red), differing only in the guidance.
+              A 7-DoF Franka Research 3 (FR3) must reach goal joint configurations without violating obstacle, self-collision, floor-contact, or joint-limit constraints introduced only at inference, and every clip below shares the same start (green) and goal (red), differing only in the planner.
             </p>
           </div>
         </div>
 
-        <div class="columns is-centered">
-          <div class="column is-half has-text-centered">
-            <video id="video-fr3-dp" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/edited_tracking_dp.mp4" type="video/mp4">
+        <div class="columns is-centered is-multiline">
+          <div class="column is-one-quarter has-text-centered">
+            <video id="video-fr3-cem" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/3d/edited_3d_cem.mp4" type="video/mp4">
             </video>
-            <p class="content has-text-justified" style="margin-top: 0.5rem; line-height: 1.6;">
-              <b>Diffusion Policy.</b> One update direction carries every safety penalty, so the arm is pulled into an obstacle and the trial ends on a collision, short of the goal.
-            </p>
+            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>CEM</b></p>
           </div>
-          <div class="column is-half has-text-centered">
-            <video id="video-fr3-grace" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/edited_tracking_grace.mp4" type="video/mp4">
+          <div class="column is-one-quarter has-text-centered">
+            <video id="video-fr3-mppi" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/3d/edited_3d_mppi.mp4" type="video/mp4">
             </video>
-            <p class="content has-text-justified" style="margin-top: 0.5rem; line-height: 1.6;">
-              <b>GRACE (ours).</b> Reweighting complete rollouts against the total cost bends the same prior around the clutter, and the goal is reached with every safety constraint intact.
-            </p>
+            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>MPPI</b></p>
+          </div>
+          <div class="column is-one-quarter has-text-centered">
+            <video id="video-fr3-damppi" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/3d/edited_3d_damppi.mp4" type="video/mp4">
+            </video>
+            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>DA-MPPI</b></p>
+          </div>
+          <div class="column is-one-quarter has-text-centered">
+            <video id="video-fr3-podp" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/3d/edited_3d_po_dp.mp4" type="video/mp4">
+            </video>
+            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>PO-DP</b></p>
+          </div>
+          <div class="column is-one-quarter has-text-centered">
+            <video id="video-fr3-ggdp" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/3d/edited_3d_gg_dp.mp4" type="video/mp4">
+            </video>
+            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>GG-DP</b></p>
+          </div>
+          <div class="column is-one-quarter has-text-centered">
+            <video id="video-fr3-des" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/3d/edited_3d_diffusion_es.mp4" type="video/mp4">
+            </video>
+            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>Diffusion-ES</b></p>
+          </div>
+          <div class="column is-one-quarter has-text-centered">
+            <video id="video-fr3-grace-cnn" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/3d/edited_3d_grace_cnn.mp4" type="video/mp4">
+            </video>
+            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>GRACE (CNN, ours)</b></p>
+          </div>
+          <div class="column is-one-quarter has-text-centered">
+            <video id="video-fr3-grace-unet" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
+              <source src="static/videos/3d/edited_3d_grace_unet.mp4" type="video/mp4">
+            </video>
+            <p class="content is-size-7 has-text-centered" style="margin-top: 0.4rem;"><b>GRACE (UNet, ours)</b></p>
           </div>
         </div>
 
@@ -414,15 +477,15 @@
         <div class="columns is-centered">
           <div class="column is-half has-text-centered">
             <video id="video-real-fail" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/edited_fail2.mp4" type="video/mp4">
+              <source src="static/videos/real/edited_fail2.mp4" type="video/mp4">
             </video>
             <p class="content has-text-justified" style="margin-top: 0.5rem; line-height: 1.6;">
-              <b>Diffusion Policy (unguided).</b> Reproduces the demonstrated placing motion faithfully, and drives the cube straight into the box it never saw.
+              <b>Diffusion Policy.</b> Reproduces the demonstrated placing motion faithfully, and drives the cube straight into the box it never saw.
             </p>
           </div>
           <div class="column is-half has-text-centered">
             <video id="video-real-success" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/edited_success_floor1.mp4" type="video/mp4">
+              <source src="static/videos/real/edited_success_floor1.mp4" type="video/mp4">
             </video>
             <p class="content has-text-justified" style="margin-top: 0.5rem; line-height: 1.6;">
               <b>GRACE (ours).</b> The same prior, reweighted at each reverse step by the binary collision cost, detours around the box and still completes the placement.
