@@ -239,7 +239,7 @@
         <div class="columns is-centered">
           <div class="column is-full has-text-centered">
             <video id="concept-video" controls muted loop playsinline preload="metadata" style="width: 100%; border-radius: 10px;">
-              <source src="static/videos/edited_success_book.mp4" type="video/mp4">
+              <source src="static/videos/real/edited_success_book_mask.mp4" type="video/mp4">
             </video>
             <p class="content has-text-justified" style="margin-top: 1rem; line-height: 1.6;">
               <b>Guidance on real hardware.</b> The pretrained prior supplies the demonstrated manipulation behavior, while GRACE reweights forward-evaluated rollouts inside each reverse step to shift the posterior mean around an unseen obstacle—without retraining or differentiating the cost or dynamics.
@@ -354,14 +354,14 @@
                   <tr><th>Method</th><th>Success [%] &uarr;</th><th>Collision Fail &darr;</th><th>Path Length [m] &darr;</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td>CEM</td><td>8/30 (26.7%)</td><td><b>0/30</b></td><td>1.247</td></tr>
-                  <tr><td>MPPI</td><td>8/30 (26.7%)</td><td><b>0/30</b></td><td>1.241</td></tr>
-                  <tr><td>DA-MPPI</td><td>8/30 (26.7%)</td><td><b>0/30</b></td><td><b>1.233</b></td></tr>
-                  <tr><td>PO-DP</td><td>18/30 (60.0%)</td><td>12/30</td><td>2.657</td></tr>
-                  <tr><td>GG-DP</td><td>18/30 (60.0%)</td><td>12/30</td><td>2.302</td></tr>
-                  <tr><td>Diffusion-ES</td><td>7/30 (23.3%)</td><td>23/30</td><td>2.700</td></tr>
-                  <tr><td><b>GRACE (CNN)</b></td><td>20/30 (66.7%)</td><td><b>0/30</b></td><td>3.681</td></tr>
-                  <tr><td><b>GRACE (UNet)</b></td><td><b>25/30 (83.3%)</b></td><td>2/30</td><td>3.372</td></tr>
+                  <tr><td>CEM</td><td>8/30 (26.7%)</td><td><b>0/30</b></td><td>1.247 &plusmn; 0.143</td></tr>
+                  <tr><td>MPPI</td><td>8/30 (26.7%)</td><td><b>0/30</b></td><td>1.241 &plusmn; 0.123</td></tr>
+                  <tr><td>DA-MPPI</td><td>8/30 (26.7%)</td><td><b>0/30</b></td><td><b>1.233 &plusmn; 0.120</b></td></tr>
+                  <tr><td>PO-DP</td><td>18/30 (60.0%)</td><td>12/30</td><td>2.657 &plusmn; 1.021</td></tr>
+                  <tr><td>GG-DP</td><td>18/30 (60.0%)</td><td>12/30</td><td>2.302 &plusmn; 1.115</td></tr>
+                  <tr><td>Diffusion-ES</td><td>7/30 (23.3%)</td><td>23/30</td><td>2.700 &plusmn; 0.832</td></tr>
+                  <tr><td><b>GRACE (CNN)</b></td><td>20/30 (66.7%)</td><td><b>0/30</b></td><td>3.681 &plusmn; 1.659</td></tr>
+                  <tr><td><b>GRACE (UNet)</b></td><td><b>25/30 (83.3%)</b></td><td>2/30</td><td>3.372 &plusmn; 1.538</td></tr>
                 </tbody>
               </table>
             </div>
@@ -443,14 +443,14 @@
                   <tr><th>Method</th><th>Success [%] &uarr;</th><th>Computation Time [ms] &darr;</th><th>Guidance Time [ms] &darr;</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td>CEM</td><td>24/30 (80.0%)</td><td>153.45</td><td>—</td></tr>
-                  <tr><td>MPPI</td><td>23/30 (76.7%)</td><td><b>29.88</b></td><td>—</td></tr>
-                  <tr><td>DA-MPPI</td><td>23/30 (76.7%)</td><td>154.22</td><td>—</td></tr>
-                  <tr><td>PO-DP</td><td>11/30 (36.7%)</td><td>647.30</td><td>220.01</td></tr>
-                  <tr><td>GG-DP</td><td>15/30 (50.0%)</td><td>671.59</td><td>244.72</td></tr>
-                  <tr><td>Diffusion-ES</td><td>12/30 (40.0%)</td><td>1664.35</td><td>217.87</td></tr>
-                  <tr><td><b>GRACE (CNN)</b></td><td><b>27/30 (90.0%)</b></td><td>179.23</td><td>90.53</td></tr>
-                  <tr><td><b>GRACE (UNet)</b></td><td><b>27/30 (90.0%)</b></td><td>497.64</td><td><b>85.88</b></td></tr>
+                  <tr><td>CEM</td><td>24/30 (80.0%)</td><td>153.45 &plusmn; 2.55</td><td>—</td></tr>
+                  <tr><td>MPPI</td><td>23/30 (76.7%)</td><td><b>29.88 &plusmn; 0.49</b></td><td>—</td></tr>
+                  <tr><td>DA-MPPI</td><td>23/30 (76.7%)</td><td>154.22 &plusmn; 2.49</td><td>—</td></tr>
+                  <tr><td>PO-DP</td><td>11/30 (36.7%)</td><td>647.30 &plusmn; 15.83</td><td>220.01 &plusmn; 8.76</td></tr>
+                  <tr><td>GG-DP</td><td>15/30 (50.0%)</td><td>671.59 &plusmn; 9.00</td><td>244.72 &plusmn; 5.45</td></tr>
+                  <tr><td>Diffusion-ES</td><td>12/30 (40.0%)</td><td>1664.35 &plusmn; 6.72</td><td>217.87 &plusmn; 0.70</td></tr>
+                  <tr><td><b>GRACE (CNN)</b></td><td><b>27/30 (90.0%)</b></td><td>179.23 &plusmn; 1.91</td><td>90.53 &plusmn; 0.71</td></tr>
+                  <tr><td><b>GRACE (UNet)</b></td><td><b>27/30 (90.0%)</b></td><td>497.64 &plusmn; 7.08</td><td><b>85.88 &plusmn; 0.52</b></td></tr>
                 </tbody>
               </table>
             </div>
