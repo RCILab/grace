@@ -764,3 +764,13 @@ a:focus {
 
 
 
+
+/* Fig. 4: (a) and (b) sit side by side at equal height; stack them on phones so the bar labels stay readable. */
+@media screen and (max-width: 600px) {
+  .fig4-row {
+    flex-wrap: wrap;
+  }
+  .fig4-row > div {
+    flex-basis: 100% !important;
+  }
+}
