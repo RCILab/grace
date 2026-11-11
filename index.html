@@ -5,10 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- =============================================================
-       GRACE anonymous project page
-       Target venue: IEEE Robotics and Automation Letters (RA-L), Submitted (revised version).
-       Keep author/institution information removed for double-anonymous review.
-       Replace the anonymous.4open.science ID after you regenerate it.
+       GRACE project page
+       Venue: IEEE Robotics and Automation Letters (RA-L), Accepted (2026).
+       Authors: Leesai Park*, Jiho Hong* (equal contribution), Sanghyun Kim (corresponding).
 
        Assets present in static/:
        - static/images/fig1.png                 (core idea, shown with the abstract)
@@ -34,36 +33,38 @@
   <meta name="title" content="GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Mean Estimation">
   <meta name="description" content="GRACE guides diffusion policies with MPPI using only forward cost evaluations, enabling constraint-aware robot action generation without gradients, retraining, or differentiable costs.">
   <meta name="keywords" content="diffusion models, model predictive path integral control, motion planning, posterior sampling, gradient-free optimization, robot action generation, constraint-aware planning">
-  <meta name="author" content="Anonymous Authors">
+  <meta name="author" content="Leesai Park, Jiho Hong, Sanghyun Kim">
   <meta name="robots" content="index, follow">
   <meta name="language" content="English">
 
   <meta property="og:type" content="article">
-  <meta property="og:site_name" content="Anonymous Submission">
+  <meta property="og:site_name" content="RCI Lab, Kyung Hee University">
   <meta property="og:title" content="GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Mean Estimation">
   <meta property="og:description" content="GRACE combines a multimodal diffusion prior with MPPI-based gradient-free guidance for constraint-aware robot action generation.">
-  <meta property="og:url" content="https://anonymous.4open.science/w/grace-70BB/">
-  <meta property="og:image" content="https://anonymous.4open.science/w/grace-70BB/static/images/fig1.png">
+  <meta property="og:url" content="https://rcilab.khu.ac.kr/grace/">
+  <meta property="og:image" content="https://rcilab.khu.ac.kr/grace/static/images/fig1.png">
   <meta property="og:image:alt" content="GRACE project page preview">
   <meta property="article:published_time" content="2026-01-01T00:00:00.000Z">
-  <meta property="article:author" content="Anonymous Authors">
+  <meta property="article:author" content="Leesai Park">
+  <meta property="article:author" content="Jiho Hong">
+  <meta property="article:author" content="Sanghyun Kim">
   <meta property="article:section" content="Research">
   <meta property="article:tag" content="Diffusion Models">
   <meta property="article:tag" content="Motion Planning">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:site" content="@anonymous">
-  <meta name="twitter:creator" content="@anonymous">
   <meta name="twitter:title" content="GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Mean Estimation">
   <meta name="twitter:description" content="Constraint-aware diffusion planning with gradient-free MPPI guidance.">
-  <meta name="twitter:image" content="https://anonymous.4open.science/w/grace-70BB/static/images/fig1.png">
+  <meta name="twitter:image" content="https://rcilab.khu.ac.kr/grace/static/images/fig1.png">
   <meta name="twitter:image:alt" content="GRACE project page preview">
 
   <meta name="citation_title" content="GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Mean Estimation">
-  <meta name="citation_author" content="Anonymous, Authors">
+  <meta name="citation_author" content="Park, Leesai">
+  <meta name="citation_author" content="Hong, Jiho">
+  <meta name="citation_author" content="Kim, Sanghyun">
   <meta name="citation_publication_date" content="2026">
   <meta name="citation_journal_title" content="IEEE Robotics and Automation Letters (RA-L)">
-  <meta name="citation_pdf_url" content="https://anonymous.4open.science/w/grace-70BB/static/pdfs/grace_paper.pdf">
+  <meta name="citation_pdf_url" content="https://rcilab.khu.ac.kr/grace/static/pdfs/grace_paper.pdf">
 
   <meta name="theme-color" content="#2563eb">
   <meta name="msapplication-TileColor" content="#2563eb">
@@ -110,14 +111,14 @@
     "@type": "ScholarlyArticle",
     "headline": "GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Mean Estimation",
     "description": "GRACE guides diffusion policies with MPPI using only forward cost evaluations, enabling constraint-aware robot action generation without gradients, retraining, or differentiable costs.",
-    "author": [{"@type": "Person", "name": "Anonymous Authors"}],
+    "author": [{"@type": "Person", "name": "Leesai Park"}, {"@type": "Person", "name": "Jiho Hong"}, {"@type": "Person", "name": "Sanghyun Kim"}],
     "datePublished": "2026-01-01",
-    "publisher": {"@type": "Organization", "name": "IEEE Robotics and Automation Letters (RA-L), Submitted"},
-    "url": "https://anonymous.4open.science/w/grace-70BB/",
-    "image": "https://anonymous.4open.science/w/grace-70BB/static/images/fig1.png",
+    "publisher": {"@type": "Organization", "name": "IEEE Robotics and Automation Letters (RA-L)"},
+    "url": "https://rcilab.khu.ac.kr/grace/",
+    "image": "https://rcilab.khu.ac.kr/grace/static/images/fig1.png",
     "keywords": ["diffusion models", "model predictive path integral control", "motion planning", "posterior sampling", "gradient-free optimization"],
     "abstract": "Diffusion policies generate multimodal robot action sequences from demonstrations, but steering them toward deployment-time constraints typically relies on differentiable guidance costs. This excludes many practical safety constraints, such as binary collision checks, joint limits, and black-box rollout costs that are nondifferentiable. We propose Gradient-free Robot Action generation via Combined diffusion-MPPI posterior mean Estimation (GRACE), which guides a pretrained diffusion policy with Model Predictive Path Integral (MPPI) control using only forward cost evaluations. Building on the common score-ascent structure of diffusion and MPPI, GRACE constructs a cost-conditioned guidance posterior at each reverse step and estimates its mean with a single MPPI update centered at the diffusion reverse mean. For differentiable costs, GRACE recovers conventional gradient guidance under a first-order, matched-covariance approximation. GRACE attains higher success rates than diffusion-based and sampling-based baselines in simulation. On a real 7-DoF manipulator, GRACE achieves 43/45 successes without obstacle collisions, compared with 17/45 for the unguided prior.",
-    "citation": "@article{anonymous2026grace, title={GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Mean Estimation}, author={Anonymous Authors}, journal={IEEE Robotics and Automation Letters (RA-L)}, note={Submitted}, year={2026}}",
+    "citation": "@article{park2026grace, title={GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Mean Estimation}, author={Park, Leesai and Hong, Jiho and Kim, Sanghyun}, journal={IEEE Robotics and Automation Letters}, year={2026}}",
     "isAccessibleForFree": true,
     "license": "https://creativecommons.org/licenses/by/4.0/"
   }
@@ -142,11 +143,14 @@
               </h1>
 
               <div class="is-size-5 publication-authors">
-                <span class="author-block">Anonymous Authors</span>
+                <span class="author-block">Leesai Park<sup>*</sup>,</span>
+                <span class="author-block">Jiho Hong<sup>*</sup>,</span>
+                <span class="author-block">Sanghyun Kim<sup>&dagger;</sup></span>
               </div>
 
               <div class="is-size-5 publication-authors">
-                <span class="author-block">Submitted to IEEE Robotics and Automation Letters (RA-L)</span>
+                <span class="author-block">Kyung Hee University<br>IEEE Robotics and Automation Letters (RA-L), 2026</span>
+                <span class="eql-cntrb"><small><br><sup>*</sup>Equal contribution &nbsp; <sup>&dagger;</sup>Corresponding author</small></span>
               </div>
 
               <div class="column has-text-centered">
@@ -1206,13 +1210,11 @@
             <span class="copy-text">Copy</span>
           </button>
         </div>
-        <pre id="bibtex-code"><code>@article{anonymous2026grace,
+        <pre id="bibtex-code"><code>@article{park2026grace,
   title={GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Mean Estimation},
-  author={Anonymous Authors},
-  journal={IEEE Robotics and Automation Letters (RA-L)},
-  note={Submitted},
-  year={2026},
-  url={https://anonymous.4open.science/w/grace-70BB/}
+  author={Park, Leesai and Hong, Jiho and Kim, Sanghyun},
+  journal={IEEE Robotics and Automation Letters},
+  year={2026}
 }</code></pre>
       </div>
     </section>
