@@ -849,7 +849,7 @@
 
         <div class="content has-text-justified" style="line-height: 1.7;">
           <p>
-            The following tables summarize the diffusion-policy training configuration and the principal hyperparameters used for each planning and guidance baseline.
+            The following tables summarize the diffusion-policy training configuration, the task settings, and the GRACE hyperparameters used in each domain.
           </p>
         </div>
 
@@ -956,100 +956,7 @@
           </table>
         </div>
 
-        <h4 class="title is-5" style="margin-top: 2rem;">B.2 Sampling-Based Planners</h4>
-
-        <h5 class="title is-6">CEM</h5>
-        <div class="table-container">
-          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
-            <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
-            <tbody>
-              <tr><td>Population size</td><td>1,000</td></tr>
-              <tr><td>Optimization iterations</td><td>5</td></tr>
-              <tr><td>Elite fraction</td><td>0.1</td></tr>
-              <tr><td>Initial sampling std</td><td>1.0</td></tr>
-              <tr><td>Minimum sampling std</td><td>0</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h5 class="title is-6" style="margin-top: 1.5rem;">MPPI</h5>
-        <div class="table-container">
-          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
-            <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
-            <tbody>
-              <tr><td>Rollout samples</td><td>1,000</td></tr>
-              <tr><td>Optimization iterations</td><td>1</td></tr>
-              <tr><td>Sampling std</td><td>1.0</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h5 class="title is-6" style="margin-top: 1.5rem;">DA-MPPI</h5>
-        <div class="table-container">
-          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
-            <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
-            <tbody>
-              <tr><td>Rollout samples</td><td>1,000</td></tr>
-              <tr><td>Annealing iterations</td><td>5</td></tr>
-              <tr><td>Initial sampling std</td><td>1.0</td></tr>
-              <tr><td>Minimum sampling std</td><td>0</td></tr>
-              <tr><td>Inter-iteration std decay</td><td>0.5</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h4 class="title is-5" style="margin-top: 2rem;">B.3 Diffusion-Based Methods</h4>
-
-        <h5 class="title is-6">Gradient-Guided Diffusion</h5>
-        <div class="table-container">
-          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
-            <thead>
-              <tr>
-                <th>Method</th>
-                <th>Backbone</th>
-                <th>Guidance stage</th>
-                <th>Gradient updates</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td><b>GG-DP</b></td><td>UNet</td><td>Final 10 denoising steps</td><td>5 per guided step</td></tr>
-              <tr><td><b>PO-Grad</b></td><td>UNet</td><td>After denoising</td><td>50</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h5 class="title is-6" style="margin-top: 1.5rem;">Diffusion-ES</h5>
-        <div class="table-container">
-          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
-            <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
-            <tbody>
-              <tr><td>Backbone</td><td>UNet</td></tr>
-              <tr><td>Population size</td><td>100</td></tr>
-              <tr><td>Evolutionary search iterations</td><td>3</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h5 class="title is-6" style="margin-top: 1.5rem;">PO-MPPI and CEM-DP</h5>
-        <div class="table-container">
-          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
-            <thead>
-              <tr>
-                <th>Method</th>
-                <th>Backbone</th>
-                <th>Guidance stage</th>
-                <th>Samples per update</th>
-                <th>Update</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td><b>PO-MPPI</b></td><td>UNet</td><td>10 MPPI updates after denoising</td><td>1,000</td><td>Cost-weighted mean, same sampling covariance as GRACE</td></tr>
-              <tr><td><b>CEM-DP</b></td><td>UNet</td><td>Final 10 denoising steps</td><td>1,000</td><td>Lowest-cost candidate, sampled with the diffusion-schedule covariance</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h5 class="title is-6" style="margin-top: 1.5rem;">GRACE</h5>
+        <h4 class="title is-5" style="margin-top: 2rem;">B.2 GRACE</h4>
         <div class="table-container">
           <table class="table is-fullwidth is-striped is-hoverable is-bordered">
             <thead>
@@ -1084,100 +991,7 @@
           </table>
         </div>
 
-        <h4 class="title is-5" style="margin-top: 2rem;">C.2 Sampling-Based Planners</h4>
-
-        <h5 class="title is-6">CEM</h5>
-        <div class="table-container">
-          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
-            <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
-            <tbody>
-              <tr><td>Population size</td><td>1,000</td></tr>
-              <tr><td>Optimization iterations</td><td>5</td></tr>
-              <tr><td>Elite fraction</td><td>0.1</td></tr>
-              <tr><td>Initial sampling std</td><td>0.03 rad</td></tr>
-              <tr><td>Minimum sampling std</td><td>0</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h5 class="title is-6" style="margin-top: 1.5rem;">MPPI</h5>
-        <div class="table-container">
-          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
-            <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
-            <tbody>
-              <tr><td>Rollout samples</td><td>1,000</td></tr>
-              <tr><td>Optimization iterations</td><td>1</td></tr>
-              <tr><td>Sampling std</td><td>0.007 rad</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h5 class="title is-6" style="margin-top: 1.5rem;">DA-MPPI</h5>
-        <div class="table-container">
-          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
-            <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
-            <tbody>
-              <tr><td>Rollout samples</td><td>1,000</td></tr>
-              <tr><td>Annealing iterations</td><td>5</td></tr>
-              <tr><td>Initial sampling std</td><td>0.03 rad</td></tr>
-              <tr><td>Minimum sampling std</td><td>0</td></tr>
-              <tr><td>Inter-iteration std decay</td><td>0.5</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h4 class="title is-5" style="margin-top: 2rem;">C.3 Diffusion-Based Methods</h4>
-
-        <h5 class="title is-6">Gradient-Guided Diffusion</h5>
-        <div class="table-container">
-          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
-            <thead>
-              <tr>
-                <th>Method</th>
-                <th>Backbone</th>
-                <th>Guidance stage</th>
-                <th>Gradient updates</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td><b>GG-DP</b></td><td>UNet</td><td>Final 5 denoising steps</td><td>5 per guided step</td></tr>
-              <tr><td><b>PO-Grad</b></td><td>UNet</td><td>After denoising</td><td>25</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h5 class="title is-6" style="margin-top: 1.5rem;">Diffusion-ES</h5>
-        <div class="table-container">
-          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
-            <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
-            <tbody>
-              <tr><td>Backbone</td><td>UNet</td></tr>
-              <tr><td>Population size</td><td>100</td></tr>
-              <tr><td>Evolutionary search iterations</td><td>3</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h5 class="title is-6" style="margin-top: 1.5rem;">PO-MPPI and CEM-DP</h5>
-        <div class="table-container">
-          <table class="table is-fullwidth is-striped is-hoverable is-bordered">
-            <thead>
-              <tr>
-                <th>Method</th>
-                <th>Backbone</th>
-                <th>Guidance stage</th>
-                <th>Samples per update</th>
-                <th>Update</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td><b>PO-MPPI</b></td><td>UNet</td><td>5 MPPI updates after denoising</td><td>1,000</td><td>Cost-weighted mean, same sampling covariance as GRACE</td></tr>
-              <tr><td><b>CEM-DP</b></td><td>UNet</td><td>Final 5 denoising steps</td><td>1,000</td><td>Lowest-cost candidate, sampled with the diffusion-schedule covariance</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h5 class="title is-6" style="margin-top: 1.5rem;">GRACE</h5>
+        <h4 class="title is-5" style="margin-top: 2rem;">C.2 GRACE</h4>
         <div class="table-container">
           <table class="table is-fullwidth is-striped is-hoverable is-bordered">
             <thead>
