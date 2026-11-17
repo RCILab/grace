@@ -27,6 +27,8 @@
        - static/videos/real/edited_success_floor1.mp4, edited_fail2.mp4
                                                    (Real-world: obstacle 1, shelf level 1, guided/unguided)
 
+       Overview video: embedded from YouTube (https://youtu.be/OnLcFcTHfxM).
+
        Unused: static/images/fig1.jpg, fig3a.png, fig3b.png, fig4.png, fig5.png, static/videos/banner_video.mp4.
        ============================================================= -->
 
@@ -76,6 +78,7 @@
   <link rel="preconnect" href="https://ajax.googleapis.com">
   <link rel="preconnect" href="https://documentcloud.adobe.com">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://www.youtube.com">
 
   <title>GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Mean Estimation | Project Page</title>
 
@@ -156,13 +159,6 @@
               <div class="column has-text-centered">
                 <div class="publication-links">
                   <span class="link-block">
-                    <a href="static/pdfs/grace_paper.pdf" target="_blank" class="external-link button is-normal is-rounded is-dark">
-                      <span class="icon"><i class="fas fa-file-pdf"></i></span>
-                      <span>Paper</span>
-                    </a>
-                  </span>
-
-                  <span class="link-block">
                     <a href="https://arxiv.org/abs/2607.21661"
                        target="_blank"
                        rel="noopener noreferrer"
@@ -180,7 +176,7 @@
                   </span>
 
                   <span class="link-block">
-                    <a href="https://www.youtube.com/watch?v=D1fgvnKC2kM"
+                    <a href="https://youtu.be/OnLcFcTHfxM"
                        target="_blank"
                        rel="noopener noreferrer"
                        class="external-link button is-normal is-rounded is-dark">
@@ -197,20 +193,20 @@
       </div>
     </section>
 
-    <!-- ===================== Overview video (top) ===================== -->
+    <!-- ===================== Overview video (top, YouTube embed) ===================== -->
     <section class="hero teaser">
       <div class="container is-fluid" style="width: min(96vw, 1280px); max-width: 1280px;">
         <div class="hero-body" style="padding-left: 0; padding-right: 0;">
           <h2 class="title is-3 has-text-centered">Overview</h2>
-          <video
-            id="teaser-video"
-            controls
-            playsinline
-            preload="metadata"
-            style="width: 100%; border-radius: 10px; display: block;">
-            <source src="static/videos/grace.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
+          <div style="position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 10px; overflow: hidden;">
+            <iframe
+              src="https://www.youtube.com/embed/OnLcFcTHfxM"
+              title="GRACE overview video"
+              style="position: absolute; inset: 0; width: 100%; height: 100%; border: 0;"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen></iframe>
+          </div>
         </div>
       </div>
     </section>
